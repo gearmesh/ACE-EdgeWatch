@@ -1,0 +1,5 @@
+{
+  "name": "ACE EdgeWatch Service Status",
+  "description": "A web application to monitor the status of various applications and cloud providers, inspired by a mobile UI design. Users can navigate to see the status of different services.",
+  "requestFramePermissions": []
+}
