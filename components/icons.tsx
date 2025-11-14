@@ -136,3 +136,10 @@ export const CitrixIcon: React.FC = () => (
         <circle cx="12" cy="16.5" r="1.5" fill="#F97316" />
     </svg>
 );
+
+export const BigIPIcon: React.FC = () => (
+  <svg {...iconProps} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="none">
+    <circle cx="12" cy="12" r="10" fill="#DC2626"/>
+    <path d="M12.2,17.25 C12.2,17.25 15,16.5 15,13 C15,9.5 12.2,7 12.2,7 L12.2,9.25 C12.2,9.25 13.25,10 13.25,13 C13.25,16 12.2,15 12.2,15 L12.2,17.25 Z M9,7 L9,17.25 L11,17.25 L11,7 L9,7 Z" fill="white" />
+  </svg>
+);

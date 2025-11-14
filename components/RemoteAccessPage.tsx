@@ -1,6 +1,7 @@
+
 import React from 'react';
 import type { Page } from '../App';
-import { BackArrowIcon, PulseSecureIcon, CitrixIcon } from './icons';
+import { BackArrowIcon, PulseSecureIcon, CitrixIcon, BigIPIcon } from './icons';
 
 interface RemoteAccessPageProps {
   onNavigate: (page: Page) => void;
@@ -42,6 +43,7 @@ const RemoteAccessPage: React.FC<RemoteAccessPageProps> = ({ onNavigate }) => {
       <main className="grid grid-cols-2 gap-4">
         <ServiceTile icon={<PulseSecureIcon />} title="PulseSecure" onClick={() => onNavigate('pulsesecure')} />
         <ServiceTile icon={<CitrixIcon />} title="Citrix" onClick={() => onNavigate('citrix')} />
+        <ServiceTile icon={<BigIPIcon />} title="BIG-IP F5" onClick={() => onNavigate('bigip')} />
       </main>
     </div>
   );

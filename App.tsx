@@ -8,6 +8,7 @@ import SplashScreen from './components/SplashScreen';
 import PulseSecurePage from './components/PulseSecurePage';
 import RemoteAccessPage from './components/RemoteAccessPage';
 import CitrixPage from './components/CitrixPage';
+import BigIPPage from './components/BigIPPage';
 
 export type Page = 
   'home' | 
@@ -25,7 +26,8 @@ export type Page =
   'salesforce' |
   'pulsesecure' |
   'aceingress' |
-  'citrix';
+  'citrix' |
+  'bigip';
 
 const App: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<Page>('home');
@@ -133,6 +135,8 @@ const App: React.FC = () => {
         return <PulseSecurePage onBack={() => navigate('aceingress')} />;
       case 'citrix':
         return <CitrixPage onBack={() => navigate('aceingress')} />;
+      case 'bigip':
+        return <BigIPPage onBack={() => navigate('aceingress')} />;
       case 'aceingress':
         return <RemoteAccessPage onNavigate={navigate} />;
       default:
