@@ -9,6 +9,7 @@ import PulseSecurePage from './components/PulseSecurePage';
 import RemoteAccessPage from './components/RemoteAccessPage';
 import CitrixPage from './components/CitrixPage';
 import BigIPPage from './components/BigIPPage';
+import SmartITPage from './components/SmartITPage';
 
 export type Page = 
   'home' | 
@@ -27,7 +28,8 @@ export type Page =
   'pulsesecure' |
   'aceingress' |
   'citrix' |
-  'bigip';
+  'bigip' |
+  'smartit';
 
 const App: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<Page>('home');
@@ -139,6 +141,8 @@ const App: React.FC = () => {
         return <BigIPPage onBack={() => navigate('aceingress')} />;
       case 'aceingress':
         return <RemoteAccessPage onNavigate={navigate} />;
+      case 'smartit':
+        return <SmartITPage onBack={() => navigate('home')} />;
       default:
         return <HomePage onNavigate={navigate} />;
     }

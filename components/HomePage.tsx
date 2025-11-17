@@ -1,7 +1,7 @@
 
 import React from 'react';
 import type { Page } from '../App';
-import { EyeIcon, UserIcon, CloudIcon, ComputerIcon } from './icons';
+import { EyeIcon, UserIcon, CloudIcon, ComputerIcon, BMCHelixIcon } from './icons';
 
 interface HomePageProps {
   onNavigate: (page: Page) => void;
@@ -52,6 +52,14 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
           <h1 className="text-4xl font-bold tracking-wider">ACE EdgeWatch</h1>
         </div>
         <div className="w-full max-w-xs space-y-4">
+          <button
+            onClick={() => handleButtonClick('smartit')}
+            className="w-full flex items-center justify-center gap-3 bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 px-4 rounded-lg shadow-lg transition-transform transform hover:scale-105"
+            aria-label="Navigate to ACE Smart IT"
+          >
+            <BMCHelixIcon />
+            ACE Smart IT
+          </button>
           <button
             onClick={() => handleButtonClick('application')}
             className="w-full flex items-center justify-center gap-3 bg-cyan-500 hover:bg-cyan-600 text-white font-semibold py-3 px-4 rounded-lg shadow-lg transition-transform transform hover:scale-105"
