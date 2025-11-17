@@ -46,7 +46,7 @@ const CloudProviderPage: React.FC<CloudProviderPageProps> = ({ onNavigate }) => 
         <ServiceTile icon={<CloudIcon />} title="Azure" onClick={() => window.open('https://downdetector.com/status/windows-azure/', '_blank', 'noopener,noreferrer')} />
         <ServiceTile icon={<ServerIcon />} title="AWS" onClick={() => window.open('https://downdetector.com/status/aws-amazon-web-services/', '_blank', 'noopener,noreferrer')} />
         <ServiceTile icon={<BuildingIcon />} title="Microsoft 365" onClick={() => window.open('https://downdetector.com/status/microsoft-365/', '_blank', 'noopener,noreferrer')} />
-        <ServiceTile icon={<SalesforceIcon />} title="Salesforce" onClick={() => window.open('https://downdetector.com/status/salesforce/', '_blank', 'noopener,noreferrer')} />
+        <ServiceTile icon={<SalesforceIcon />} title="Salesforce" onClick={() => window.open('https://status.salesforce.com/current', '_blank', 'noopener,noreferrer')} />
         <ServiceTile icon={<MSEntraIcon />} title="MS Entra" onClick={() => window.open('https://downdetector.com/status/microsoft-entra/', '_blank', 'noopener,noreferrer')} />
         <ServiceTile icon={<MSTeamsIcon />} title="MS Teams" onClick={() => window.open('https://downdetector.com/status/teams/', '_blank', 'noopener,noreferrer')} />
       </main>
