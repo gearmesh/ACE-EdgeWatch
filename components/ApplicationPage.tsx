@@ -1,6 +1,7 @@
+
 import React from 'react';
 import type { Page } from '../App';
-import { BackArrowIcon, CartIcon, MailIcon, PhoneIcon, KeyIcon, PlaceholderIcon, CloudIcon } from './icons';
+import { BackArrowIcon, CartIcon, MailIcon, PhoneIcon, KeyIcon, PlaceholderIcon, CloudIcon, MultipleAppsIcon } from './icons';
 
 interface ApplicationPageProps {
   onNavigate: (page: Page) => void;
@@ -45,7 +46,7 @@ const ApplicationPage: React.FC<ApplicationPageProps> = ({ onNavigate }) => {
         <ServiceTile icon={<PhoneIcon />} title="Intune" onClick={() => window.open('https://statusgator.com/services/microsoft-intune', '_blank', 'noopener,noreferrer')} />
         <ServiceTile icon={<KeyIcon />} title="SSO" onClick={() => window.open('https://downdetector.com/status/windows-azure/', '_blank', 'noopener,noreferrer')} />
         <ServiceTile icon={<CloudIcon />} title="Azure Health" onClick={() => window.open('https://portal.azure.com/#view/Microsoft_Azure_Health/AzureHealthBrowseBlade/~/serviceIssues', '_blank', 'noopener,noreferrer')} />
-        <ServiceTile icon={<PlaceholderIcon />} title="Coming Soon" disabled />
+        <ServiceTile icon={<MultipleAppsIcon />} title="Claims Pay, TLO, N2uitive & ISO" onClick={() => window.open('https://www.cloudflarestatus.com/', '_blank', 'noopener,noreferrer')} />
       </main>
     </div>
   );

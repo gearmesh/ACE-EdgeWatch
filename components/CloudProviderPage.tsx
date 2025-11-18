@@ -1,7 +1,7 @@
 
 import React from 'react';
 import type { Page } from '../App';
-import { BackArrowIcon, MapIcon, CloudIcon, ServerIcon, BuildingIcon, SalesforceIcon, MSEntraIcon, MSTeamsIcon } from './icons';
+import { BackArrowIcon, MapIcon, CloudIcon, ServerIcon, BuildingIcon, SalesforceIcon, MSEntraIcon, MSTeamsIcon, CloudflareIcon } from './icons';
 
 interface CloudProviderPageProps {
   onNavigate: (page: Page) => void;
@@ -49,6 +49,7 @@ const CloudProviderPage: React.FC<CloudProviderPageProps> = ({ onNavigate }) => 
         <ServiceTile icon={<SalesforceIcon />} title="Salesforce" onClick={() => window.open('https://status.salesforce.com/current', '_blank', 'noopener,noreferrer')} />
         <ServiceTile icon={<MSEntraIcon />} title="MS Entra" onClick={() => window.open('https://downdetector.com/status/microsoft-entra/', '_blank', 'noopener,noreferrer')} />
         <ServiceTile icon={<MSTeamsIcon />} title="MS Teams" onClick={() => window.open('https://downdetector.com/status/teams/', '_blank', 'noopener,noreferrer')} />
+        <ServiceTile icon={<CloudflareIcon />} title="Cloudflare" onClick={() => window.open('https://www.cloudflarestatus.com/', '_blank', 'noopener,noreferrer')} />
       </main>
     </div>
   );
