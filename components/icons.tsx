@@ -161,3 +161,16 @@ export const MultipleAppsIcon: React.FC = () => (
         <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" />
     </svg>
 );
+
+export const FamilyIcon: React.FC = () => (
+    <svg {...iconProps} xmlns="http://www.w3.org/2000/svg">
+        {/* Person 1 (Left Parent) */}
+        <path strokeLinecap="round" strokeLinejoin="round" d="M6 9a2 2 0 100-4 2 2 0 000 4zM6 10c-1.5 0-3 1-3 2v2h6v-2c0-1-1.5-2-3-2z" />
+        {/* Person 2 (Right Parent) */}
+        <path strokeLinecap="round" strokeLinejoin="round" d="M18 9a2 2 0 100-4 2 2 0 000 4zM18 10c-1.5 0-3 1-3 2v2h6v-2c0-1-1.5-2-3-2z" />
+        {/* Person 3 (Child Left) */}
+        <path strokeLinecap="round" strokeLinejoin="round" d="M10 16a1.5 1.5 0 100-3 1.5 1.5 0 000 3zM10 17c-1 0-2 .5-2 1.5V20h4v-1.5c0-1-1-1.5-2-1.5z" />
+        {/* Person 4 (Child Right) */}
+        <path strokeLinecap="round" strokeLinejoin="round" d="M14 16a1.5 1.5 0 100-3 1.5 1.5 0 000 3zM14 17c-1 0-2 .5-2 1.5V20h4v-1.5c0-1-1-1.5-2-1.5z" />
+    </svg>
+);
