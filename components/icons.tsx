@@ -174,3 +174,14 @@ export const FamilyIcon: React.FC = () => (
         <path strokeLinecap="round" strokeLinejoin="round" d="M14 16a1.5 1.5 0 100-3 1.5 1.5 0 000 3zM14 17c-1 0-2 .5-2 1.5V20h4v-1.5c0-1-1-1.5-2-1.5z" />
     </svg>
 );
+
+export const CarCrashIcon: React.FC = () => (
+    <svg {...iconProps} xmlns="http://www.w3.org/2000/svg">
+        {/* Car body */}
+        <path strokeLinecap="round" strokeLinejoin="round" d="M18.882 9.75H5.118a3.75 3.75 0 00-3.75 3.75v4.5h1.5v-1.5h18v1.5h1.5v-4.5a3.75 3.75 0 00-3.75-3.75z" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M5.118 9.75l1.5-4.5h10.764l1.5 4.5" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M7.5 17.25a1.5 1.5 0 100 3 1.5 1.5 0 000-3zM16.5 17.25a1.5 1.5 0 100 3 1.5 1.5 0 000-3z" />
+        {/* Crash Graphic: A stylized impact star */}
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 1.5l1.2 3.6h3.6l-3 2.4 1.2 3.6-3-2.4-3 2.4 1.2-3.6-3-2.4h3.6z" fill="currentColor" opacity="0.9" />
+    </svg>
+);

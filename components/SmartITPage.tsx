@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { BackArrowIcon, PlaceholderIcon } from './icons';
+import { BackArrowIcon, PlaceholderIcon, CarCrashIcon } from './icons';
 
 interface SmartITPageProps {
   onBack: () => void;
@@ -40,7 +40,11 @@ const SmartITPage: React.FC<SmartITPageProps> = ({ onBack }) => {
         <h1 className="text-xl font-bold ml-2">ACE Smart IT</h1>
       </header>
       <main className="grid grid-cols-2 gap-4">
-        <ServiceTile icon={<PlaceholderIcon />} title="Coming Soon" disabled />
+        <ServiceTile 
+          icon={<CarCrashIcon />} 
+          title="Incidents" 
+          onClick={() => window.open('https://aceitsm-or1.onbmc.com/dashboards/d/CmJnGbtVk/ace-incident-table-dashboard?orgId=897459146', '_blank', 'noopener,noreferrer')}
+        />
         <ServiceTile icon={<PlaceholderIcon />} title="Coming Soon" disabled />
         <ServiceTile icon={<PlaceholderIcon />} title="Coming Soon" disabled />
         <ServiceTile icon={<PlaceholderIcon />} title="Coming Soon" disabled />
