@@ -43,7 +43,7 @@ const SmartITPage: React.FC<SmartITPageProps> = ({ onBack }) => {
         <ServiceTile 
           icon={<CarCrashIcon />} 
           title="Incidents" 
-          onClick={() => window.open('https://aceitsm-or1.onbmc.com/dashboards/d/CmJnGbtVk/ace-incident-table-dashboard?orgId=897459146', '_blank', 'noopener,noreferrer')}
+          onClick={() => window.open('https://aceitsm-or1.onbmc.com/dashboards/d/CmJnGbtVk/ace-incident-table-dashboard?orgId=897459146&from=now-30d&to=now', '_blank', 'noopener,noreferrer')}
         />
         <ServiceTile icon={<PlaceholderIcon />} title="Coming Soon" disabled />
         <ServiceTile icon={<PlaceholderIcon />} title="Coming Soon" disabled />
