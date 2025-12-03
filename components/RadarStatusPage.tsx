@@ -19,19 +19,36 @@ const RadarStatusPage: React.FC<RadarStatusPageProps> = ({ onBack }) => {
   useEffect(() => {
     const checkBing = async () => {
       try {
-        // Switch to corsproxy.io which returns raw HTML instead of JSON wrapped content
-        // This often bypasses some basic bot detection better than allorigins
+        // Switch to api.allorigins.win for Bing checks as it handles text responses well for this site
         const targetUrl = 'https://www.isitdownrightnow.com/maps.bing.com.html';
-        const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(targetUrl)}`;
+        const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(targetUrl)}`;
         
-        const response = await fetch(proxyUrl);
+        // Add timestamp to prevent caching
+        const response = await fetch(`${proxyUrl}&timestamp=${new Date().getTime()}`);
         const htmlText = await response.text();
         const lowerHtml = htmlText.toLowerCase();
 
         // Store snippet for debugging
         setBingDebug(htmlText.substring(0, 500));
 
-        if (lowerHtml.includes('reachable by us') || lowerHtml.includes('is up and reachable')) {
+        // Logic for IsItDownRightNow.com
+        
+        // 1. Check for the status images (Most reliable method for this site)
+        // "up.png" indicates healthy, "down.png" indicates down.
+        if (lowerHtml.includes('/img/up.png') || lowerHtml.includes('alt="up"')) {
+            setBingStatus('healthy');
+        } 
+        else if (lowerHtml.includes('/img/down.png') || lowerHtml.includes('alt="down"')) {
+            setBingStatus('critical');
+        }
+        // 2. Check for specific CSS classes
+        else if (lowerHtml.includes('class="status_up"') || lowerHtml.includes("class='status_up'") || lowerHtml.includes('status_up')) {
+            setBingStatus('healthy');
+        } else if (lowerHtml.includes('class="status_down"') || lowerHtml.includes("class='status_down'") || lowerHtml.includes('status_down')) {
+            setBingStatus('critical');
+        }
+        // 3. Fallback to text content checks
+        else if (lowerHtml.includes('reachable by us') || lowerHtml.includes('is up and reachable')) {
           setBingStatus('healthy');
         } else if (lowerHtml.includes('is declined') || lowerHtml.includes('refused')) {
           setBingStatus('unreachable');
@@ -55,7 +72,7 @@ const RadarStatusPage: React.FC<RadarStatusPageProps> = ({ onBack }) => {
 
     const checkGoogle = async () => {
       try {
-        // Using corsproxy.io for Google/DownDetector as well
+        // Using corsproxy.io for Google/DownDetector (User confirmed this works)
         const targetUrl = 'https://downdetector.com/status/google-maps/';
         const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(targetUrl)}`;
 
