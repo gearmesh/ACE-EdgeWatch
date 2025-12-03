@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from 'react';
-import { BackArrowIcon, MapIcon } from './icons';
+import { BackArrowIcon, MapLocationIcon } from './icons';
 
 interface RadarStatusPageProps {
   onBack: () => void;
@@ -17,92 +17,160 @@ const RadarStatusPage: React.FC<RadarStatusPageProps> = ({ onBack }) => {
   const [googleDebug, setGoogleDebug] = useState<string>('');
 
   useEffect(() => {
-    const checkBing = async () => {
-      try {
-        // Switch to api.allorigins.win for Bing checks as it handles text responses well for this site
-        const targetUrl = 'https://www.isitdownrightnow.com/maps.bing.com.html';
-        const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(targetUrl)}`;
-        
+    // Helper to perform a direct functional test of the service
+    // This bypasses CORS issues by attempting to load an image (opaque response)
+    // If the image loads, the service is definitely UP.
+    const testDirectConnection = (testImageUrl: string): Promise<boolean> => {
+      return new Promise((resolve) => {
+        const img = new Image();
+        img.onload = () => resolve(true);
+        img.onerror = () => resolve(false);
         // Add timestamp to prevent caching
-        const response = await fetch(`${proxyUrl}&timestamp=${new Date().getTime()}`);
-        const htmlText = await response.text();
-        const lowerHtml = htmlText.toLowerCase();
+        img.src = `${testImageUrl}&_t=${new Date().getTime()}`;
+      });
+    };
 
-        // Store snippet for debugging
-        setBingDebug(htmlText.substring(0, 500));
-
-        // Logic for IsItDownRightNow.com
-        
-        // 1. Check for the status images (Most reliable method for this site)
-        // "up.png" indicates healthy, "down.png" indicates down.
-        if (lowerHtml.includes('/img/up.png') || lowerHtml.includes('alt="up"')) {
-            setBingStatus('healthy');
-        } 
-        else if (lowerHtml.includes('/img/down.png') || lowerHtml.includes('alt="down"')) {
-            setBingStatus('critical');
-        }
-        // 2. Check for specific CSS classes
-        else if (lowerHtml.includes('class="status_up"') || lowerHtml.includes("class='status_up'") || lowerHtml.includes('status_up')) {
-            setBingStatus('healthy');
-        } else if (lowerHtml.includes('class="status_down"') || lowerHtml.includes("class='status_down'") || lowerHtml.includes('status_down')) {
-            setBingStatus('critical');
-        }
-        // 3. Fallback to text content checks
-        else if (lowerHtml.includes('reachable by us') || lowerHtml.includes('is up and reachable')) {
-          setBingStatus('healthy');
-        } else if (lowerHtml.includes('is declined') || lowerHtml.includes('refused')) {
-          setBingStatus('unreachable');
-        } else if (lowerHtml.includes('down for everyone')) {
-          setBingStatus('critical');
-        } else {
-          // If we got HTML but didn't match strings, check if it's a block page
-          if (lowerHtml.includes('cloudflare') || lowerHtml.includes('captcha') || lowerHtml.includes('just a moment')) {
-             setBingDebug("Blocked by Anti-Bot (Cloudflare).");
-             setBingStatus('unknown');
+    const fetchWithFallback = async (targetUrl: string, proxies: string[]): Promise<string> => {
+      let lastError;
+      for (const proxyBase of proxies) {
+        try {
+          // Construct URL based on proxy type
+          let fullUrl = '';
+          if (proxyBase.includes('allorigins')) {
+             fullUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(targetUrl)}`;
+          } else if (proxyBase.includes('corsproxy.io')) {
+             fullUrl = `${proxyBase}?${encodeURIComponent(targetUrl)}`;
           } else {
-             setBingStatus('unknown');
+             fullUrl = `${proxyBase}${encodeURIComponent(targetUrl)}`;
           }
+
+          const response = await fetch(fullUrl);
+          if (!response.ok) throw new Error(`HTTP ${response.status} from ${proxyBase}`);
+          
+          let text = '';
+          if (proxyBase.includes('allorigins')) {
+             const json = await response.json();
+             text = json.contents;
+          } else {
+             text = await response.text();
+          }
+
+          if (!text) throw new Error(`Empty response from ${proxyBase}`);
+          return text;
+        } catch (e) {
+          console.warn(`Proxy ${proxyBase} failed:`, e);
+          lastError = e;
         }
+      }
+      throw lastError || new Error("All proxies failed");
+    };
+
+    const checkBing = async () => {
+      let status: Status = 'unknown';
+      let debugMsg = '';
+
+      try {
+        setBingStatus('loading');
+        
+        // 1. Try Scraping First
+        try {
+            const targetUrl = 'https://www.isitdownrightnow.com/maps.bing.com.html';
+            const htmlText = await fetchWithFallback(targetUrl, [
+                'https://api.allorigins.win/get?url=', // Use AllOrigins JSON mode for better text extraction
+                'https://corsproxy.io/'
+            ]);
+            
+            const lowerHtml = htmlText.toLowerCase();
+            debugMsg = htmlText.substring(0, 300);
+
+            if (lowerHtml.includes('class="status_up"') || lowerHtml.includes("class='status_up'")) {
+                 status = 'healthy';
+            } else if (lowerHtml.includes('class="status_down"') || lowerHtml.includes("class='status_down'")) {
+                 status = 'critical';
+            } else if (lowerHtml.includes('is down for everyone')) {
+                status = 'critical';
+            } else if (lowerHtml.includes('is up and reachable') || lowerHtml.includes('reachable by us')) {
+                status = 'healthy';
+            }
+        } catch (scrapeError: any) {
+            debugMsg = `Scrape failed: ${scrapeError.message}`;
+        }
+
+        // 2. Fallback: Direct Connection Test if scrape failed or was inconclusive
+        if (status === 'unknown') {
+            debugMsg += " | Attempting Direct Ping...";
+            // Try to load a generic map tile from Bing Maps CDN
+            const isReachable = await testDirectConnection('https://ecn.t0.tiles.virtualearth.net/tiles/r0.jpeg?g=1&mkt=en-US');
+            
+            if (isReachable) {
+                status = 'healthy';
+                debugMsg += " | Direct Ping: SUCCESS";
+            } else {
+                status = 'unreachable';
+                debugMsg += " | Direct Ping: FAILED";
+            }
+        }
+
+        setBingStatus(status);
+        setBingDebug(debugMsg);
+
       } catch (error: any) {
-        console.error('Error fetching Bing status:', error);
-        setBingStatus('unknown');
-        setBingDebug(`Error: ${error.message}`);
+        console.error('Bing Check Error:', error);
+        setBingStatus('unreachable');
+        setBingDebug(`Critical Failure: ${error.message}`);
       }
     };
 
     const checkGoogle = async () => {
+      let status: Status = 'unknown';
+      let debugMsg = '';
+
       try {
-        // Using corsproxy.io for Google/DownDetector (User confirmed this works)
-        const targetUrl = 'https://downdetector.com/status/google-maps/';
-        const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(targetUrl)}`;
+        setGoogleStatus('loading');
+        
+        // 1. Try Scraping First
+        try {
+            const targetUrl = 'https://downdetector.com/status/google-maps/';
+            const htmlText = await fetchWithFallback(targetUrl, [
+                 'https://corsproxy.io/'
+            ]);
+            
+            const lowerHtml = htmlText.toLowerCase();
+            debugMsg = htmlText.substring(0, 300);
 
-        const response = await fetch(proxyUrl);
-        const htmlText = await response.text();
-        const lowerHtml = htmlText.toLowerCase();
-
-        // Store snippet for debugging
-        setGoogleDebug(htmlText.substring(0, 500));
-
-        // Check specifically for "no current problems" first
-        if (lowerHtml.includes('indicate no current problems') || lowerHtml.includes('no problems at google maps')) {
-          setGoogleStatus('healthy');
-        } else if (lowerHtml.includes('indicate possible problems')) {
-          setGoogleStatus('warning');
-        } else if (lowerHtml.includes('indicate problems')) {
-          // "indicate problems" matches "indicate NO current problems", so this check must come last
-          setGoogleStatus('critical');
-        } else {
-           if (lowerHtml.includes('cloudflare') || lowerHtml.includes('captcha') || lowerHtml.includes('just a moment')) {
-             setGoogleDebug("Blocked by Anti-Bot (Cloudflare). DownDetector is very strict.");
-             setGoogleStatus('unknown');
-          } else {
-             setGoogleStatus('unknown');
-          }
+            if (lowerHtml.includes('user reports indicate no current problems')) {
+                status = 'healthy';
+            } else if (lowerHtml.includes('user reports indicate possible problems')) {
+                status = 'warning';
+            } else if (lowerHtml.includes('user reports indicate problems')) {
+                status = 'critical';
+            }
+        } catch (scrapeError: any) {
+            debugMsg = `Scrape failed: ${scrapeError.message}`;
         }
+
+        // 2. Fallback: Direct Connection Test
+        if (status === 'unknown') {
+             debugMsg += " | Attempting Direct Ping...";
+             // Try to load a generic map tile from Google Maps
+             const isReachable = await testDirectConnection('https://mt0.google.com/vt/lyrs=m&hl=en&x=0&y=0&z=0');
+             
+             if (isReachable) {
+                 status = 'healthy';
+                 debugMsg += " | Direct Ping: SUCCESS";
+             } else {
+                 status = 'unreachable';
+                 debugMsg += " | Direct Ping: FAILED";
+             }
+        }
+        
+        setGoogleStatus(status);
+        setGoogleDebug(debugMsg);
+
       } catch (error: any) {
-        console.error('Error fetching Google status:', error);
-        setGoogleStatus('unknown');
-        setGoogleDebug(`Error: ${error.message}`);
+        console.error('Google Check Error:', error);
+        setGoogleStatus('unreachable');
+        setGoogleDebug(`Critical Failure: ${error.message}`);
       }
     };
 
@@ -119,7 +187,7 @@ const RadarStatusPage: React.FC<RadarStatusPageProps> = ({ onBack }) => {
       case 'critical':
         return { color: 'bg-red-600 hover:bg-red-700', text: 'Critical' };
       case 'unreachable':
-        return { color: 'bg-yellow-500 hover:bg-yellow-600', text: 'Unreachable' };
+        return { color: 'bg-red-600 hover:bg-red-700', text: 'Unreachable' }; // Using Red for Unreachable
       case 'loading':
         return { color: 'bg-slate-700 hover:bg-slate-800', text: 'Checking...' };
       case 'unknown':
@@ -146,17 +214,19 @@ const RadarStatusPage: React.FC<RadarStatusPageProps> = ({ onBack }) => {
           className={`flex-1 w-full rounded-2xl shadow-xl flex flex-col items-center justify-center p-8 transition-all transform hover:scale-[1.02] ${bingConfig.color}`}
         >
           <div className="bg-white/20 p-4 rounded-full mb-4">
-             <MapIcon className="h-16 w-16 text-white" />
+             <MapLocationIcon className="h-16 w-16 text-white" />
           </div>
           <h2 className="text-3xl font-bold text-white mb-2">BING Maps</h2>
           <span className="text-2xl font-semibold text-white uppercase tracking-wider">
             {bingConfig.text}
           </span>
-          {bingStatus === 'unknown' && (
-             <div className="mt-4 p-2 bg-black/30 rounded text-xs text-left w-full overflow-hidden font-mono h-24 overflow-y-auto">
-                <strong>Debug Info (Response Start):</strong><br/>
+          <span className="text-sm font-medium text-white/80 mt-1">Press to go Details</span>
+          
+          {(bingStatus === 'unknown') && (
+              <div className="mt-4 p-2 bg-black/30 rounded text-xs text-left w-full overflow-hidden font-mono h-24 overflow-y-auto break-all">
+                <strong>Debug Info:</strong><br/>
                 {bingDebug}
-             </div>
+              </div>
           )}
         </button>
 
@@ -166,17 +236,19 @@ const RadarStatusPage: React.FC<RadarStatusPageProps> = ({ onBack }) => {
           className={`flex-1 w-full rounded-2xl shadow-xl flex flex-col items-center justify-center p-8 transition-all transform hover:scale-[1.02] ${googleConfig.color}`}
         >
           <div className="bg-white/20 p-4 rounded-full mb-4">
-             <MapIcon className="h-16 w-16 text-white" />
+             <MapLocationIcon className="h-16 w-16 text-white" />
           </div>
           <h2 className="text-3xl font-bold text-white mb-2">Google Maps</h2>
           <span className="text-2xl font-semibold text-white uppercase tracking-wider">
             {googleConfig.text}
           </span>
-          {googleStatus === 'unknown' && (
-             <div className="mt-4 p-2 bg-black/30 rounded text-xs text-left w-full overflow-hidden font-mono h-24 overflow-y-auto">
-                <strong>Debug Info (Response Start):</strong><br/>
+          <span className="text-sm font-medium text-white/80 mt-1">Press to go Details</span>
+
+          {(googleStatus === 'unknown') && (
+              <div className="mt-4 p-2 bg-black/30 rounded text-xs text-left w-full overflow-hidden font-mono h-24 overflow-y-auto break-all">
+                <strong>Debug Info:</strong><br/>
                 {googleDebug}
-             </div>
+              </div>
           )}
         </button>
       </main>
