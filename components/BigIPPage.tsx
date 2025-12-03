@@ -54,6 +54,19 @@ const BigIPPage: React.FC<BigIPPageProps> = ({ onBack }) => {
             Load Balanced BIG-IP
           </button>
         </div>
+
+        <div className="mt-8 px-4 text-center text-sm text-slate-400 max-w-sm">
+          <p>
+            BIG-IP tests only verify that the site is accessible; it does not validate ACE access.
+          </p>
+          <p className="mt-2">
+            If you see the message
+            <br />
+            <span className="font-bold">'Your session could not be established'</span>
+            <br />
+            the test to that site <span className="text-green-400 font-bold underline">was</span> successful.
+          </p>
+        </div>
       </main>
     </div>
   );

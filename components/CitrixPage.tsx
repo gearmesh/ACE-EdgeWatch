@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { BackArrowIcon } from './icons';
 
@@ -53,6 +54,15 @@ const CitrixPage: React.FC<CitrixPageProps> = ({ onBack }) => {
           >
             Load Balanced Gateway
           </button>
+        </div>
+
+        <div className="mt-8 px-4 text-center text-sm text-slate-400 max-w-sm">
+          <p>
+            The Citrix NetScaler Gateway tests check that the site is reachable and displays the login page, confirming gateway health.
+          </p>
+          <p className="mt-2">
+            Users with Citrix access may log in to perform an end-to-end access test.
+          </p>
         </div>
       </main>
     </div>

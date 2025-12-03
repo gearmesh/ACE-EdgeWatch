@@ -10,11 +10,12 @@ interface ApplicationPageProps {
 interface TileProps {
   icon: React.ReactNode;
   title: string;
+  subtitle?: string;
   onClick?: () => void;
   disabled?: boolean;
 }
 
-const ServiceTile: React.FC<TileProps> = ({ icon, title, onClick, disabled = false }) => {
+const ServiceTile: React.FC<TileProps> = ({ icon, title, subtitle, onClick, disabled = false }) => {
   const baseClasses = "bg-slate-800 rounded-lg p-4 flex flex-col items-center justify-center aspect-square text-center space-y-2 transition-all duration-200";
   const interactiveClasses = "hover:bg-slate-700 hover:scale-105 transform cursor-pointer";
   const disabledClasses = "opacity-50 cursor-not-allowed";
@@ -26,7 +27,10 @@ const ServiceTile: React.FC<TileProps> = ({ icon, title, onClick, disabled = fal
       className={`${baseClasses} ${disabled ? disabledClasses : interactiveClasses}`}
     >
       {icon}
-      <span className="font-semibold text-sm">{title}</span>
+      <div className="flex flex-col items-center leading-tight">
+        <span className="font-semibold text-sm">{title}</span>
+        {subtitle && <span className="text-xs text-slate-400 mt-1 font-normal">{subtitle}</span>}
+      </div>
     </button>
   );
 };
@@ -77,13 +81,35 @@ const ApplicationPage: React.FC<ApplicationPageProps> = ({ onNavigate }) => {
         <h1 className="text-xl font-bold ml-2">ACE App Cloud Service Status</h1>
       </header>
       <main className="grid grid-cols-2 gap-4">
-        <ServiceTile icon={<CartIcon />} title="E-Commerce" onClick={() => window.open('https://downdetector.com/status/aws-amazon-web-services/', '_blank', 'noopener,noreferrer')} />
-        <ServiceTile icon={<MailIcon />} title="Outlook" onClick={() => window.open('https://downdetector.com/status/outlook/', '_blank', 'noopener,noreferrer')} />
-        <ServiceTile icon={<PhoneIcon />} title="Intune" onClick={() => window.open('https://statusgator.com/services/microsoft-intune', '_blank', 'noopener,noreferrer')} />
-        <ServiceTile icon={<KeyIcon />} title="SSO" onClick={() => window.open('https://downdetector.com/status/windows-azure/', '_blank', 'noopener,noreferrer')} />
-        <ServiceTile icon={<CloudIcon />} title="Azure Health" onClick={() => window.open('https://portal.azure.com/#view/Microsoft_Azure_Health/AzureHealthBrowseBlade/~/serviceIssues', '_blank', 'noopener,noreferrer')} />
-        <ServiceTile icon={<MultipleAppsIcon />} title="Claims Pay, TLO, N2uitive & ISO" onClick={() => onNavigate('cloudflare-status')} />
+        {/* Row 1 */}
+        <ServiceTile 
+            icon={<CartIcon />} 
+            title="E-Commerce" 
+            subtitle="AWS"
+            onClick={() => window.open('https://downdetector.com/status/aws-amazon-web-services/', '_blank', 'noopener,noreferrer')} 
+        />
         <ServiceTile icon={<FamilyIcon />} title="RADAR & Member Validation" onClick={handleRadarClick} />
+        
+        {/* Row 2 */}
+        <ServiceTile 
+          icon={<KeyIcon />} 
+          title="SSO" 
+          subtitle="(Azure Downdetector)" 
+          onClick={() => window.open('https://downdetector.com/status/windows-azure/', '_blank', 'noopener,noreferrer')} 
+        />
+        <ServiceTile 
+          icon={<CloudIcon />} 
+          title="Azure Health" 
+          subtitle="per Microsoft" 
+          onClick={() => window.open('https://portal.azure.com/#view/Microsoft_Azure_Health/AzureHealthBrowseBlade/~/serviceIssues', '_blank', 'noopener,noreferrer')} 
+        />
+        
+        {/* Row 3 */}
+        <ServiceTile icon={<PhoneIcon />} title="Intune" onClick={() => window.open('https://statusgator.com/services/microsoft-intune', '_blank', 'noopener,noreferrer')} />
+        <ServiceTile icon={<MailIcon />} title="Outlook" onClick={() => window.open('https://downdetector.com/status/outlook/', '_blank', 'noopener,noreferrer')} />
+        
+        {/* Row 4 */}
+        <ServiceTile icon={<MultipleAppsIcon />} title="Claims Pay, TLO, N2uitive & ISO" onClick={() => onNavigate('cloudflare-status')} />
       </main>
     </div>
   );

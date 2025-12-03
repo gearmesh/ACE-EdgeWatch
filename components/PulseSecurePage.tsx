@@ -24,7 +24,7 @@ const PulseSecurePage: React.FC<PulseSecurePageProps> = ({ onBack }) => {
         <button onClick={onBack} className="p-2 -ml-2">
           <BackArrowIcon />
         </button>
-        <h1 className="text-xl font-bold ml-2">Pulse Secure</h1>
+        <h1 className="text-xl font-bold ml-2">PulseSecure</h1>
       </header>
       <main className="flex-grow flex flex-col items-center">
         <div className="my-8">
@@ -53,6 +53,15 @@ const PulseSecurePage: React.FC<PulseSecurePageProps> = ({ onBack }) => {
           >
             Load Balanced PulseSecure
           </button>
+        </div>
+
+        <div className="mt-8 px-4 text-center text-sm text-slate-400 max-w-sm">
+          <p>
+            The PulseSecure Gateway test checks that the site is reachable and displays the login page, confirming gateway health.
+          </p>
+          <p className="mt-2">
+            Users with PulseSecure access, may log in to perform an end-to-end access test.
+          </p>
         </div>
       </main>
     </div>
