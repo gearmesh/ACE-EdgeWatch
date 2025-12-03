@@ -59,8 +59,7 @@ const ApplicationPage: React.FC<ApplicationPageProps> = ({ onNavigate }) => {
 
   const handleRadarConfirm = () => {
     setShowRadarPopup(false);
-    // Open the same URL as Bing Maps (based on CloudProviderPage)
-    window.open('https://www.isitdownrightnow.com/maps.bing.com.html', '_blank', 'noopener,noreferrer');
+    onNavigate('radar-status');
   };
 
   return (

@@ -10,6 +10,7 @@ import RemoteAccessPage from './components/RemoteAccessPage';
 import CitrixPage from './components/CitrixPage';
 import BigIPPage from './components/BigIPPage';
 import SmartITPage from './components/SmartITPage';
+import RadarStatusPage from './components/RadarStatusPage';
 
 export type Page = 
   'home' | 
@@ -29,7 +30,8 @@ export type Page =
   'aceingress' |
   'citrix' |
   'bigip' |
-  'smartit';
+  'smartit' |
+  'radar-status';
 
 const App: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<Page>('home');
@@ -143,6 +145,8 @@ const App: React.FC = () => {
         return <RemoteAccessPage onNavigate={navigate} />;
       case 'smartit':
         return <SmartITPage onBack={() => navigate('home')} />;
+      case 'radar-status':
+        return <RadarStatusPage onBack={() => navigate('application')} />;
       default:
         return <HomePage onNavigate={navigate} />;
     }

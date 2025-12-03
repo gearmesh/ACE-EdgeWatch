@@ -86,8 +86,15 @@ export const BackArrowIcon: React.FC<{className?: string}> = ({className}) => (
     </svg>
 );
 
-export const MapIcon: React.FC = () => (
-    <svg {...iconProps} xmlns="http://www.w3.org/2000/svg">
+export const MapIcon: React.FC<{className?: string}> = ({className}) => (
+    <svg 
+        xmlns="http://www.w3.org/2000/svg" 
+        className={className || "h-8 w-8 text-white"} 
+        fill="none" 
+        viewBox="0 0 24 24" 
+        stroke="currentColor" 
+        strokeWidth={1.5}
+    >
         <path strokeLinecap="round" strokeLinejoin="round" d="M9 20.25l-4.5-2.25v-11.25l4.5 2.25m0 0l4.5-2.25M9 20.25v-11.25m4.5 2.25l4.5-2.25m0 0l-4.5 2.25m4.5-2.25v11.25l-4.5 2.25M3.75 6.75l4.5-2.25m0 0l4.5 2.25m0 0l4.5-2.25m0 0l-4.5-2.25m-4.5 2.25l-4.5 2.25" />
     </svg>
 );
