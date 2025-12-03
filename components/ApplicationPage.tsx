@@ -82,7 +82,7 @@ const ApplicationPage: React.FC<ApplicationPageProps> = ({ onNavigate }) => {
         <ServiceTile icon={<PhoneIcon />} title="Intune" onClick={() => window.open('https://statusgator.com/services/microsoft-intune', '_blank', 'noopener,noreferrer')} />
         <ServiceTile icon={<KeyIcon />} title="SSO" onClick={() => window.open('https://downdetector.com/status/windows-azure/', '_blank', 'noopener,noreferrer')} />
         <ServiceTile icon={<CloudIcon />} title="Azure Health" onClick={() => window.open('https://portal.azure.com/#view/Microsoft_Azure_Health/AzureHealthBrowseBlade/~/serviceIssues', '_blank', 'noopener,noreferrer')} />
-        <ServiceTile icon={<MultipleAppsIcon />} title="Claims Pay, TLO, N2uitive & ISO" onClick={() => window.open('https://www.cloudflarestatus.com/', '_blank', 'noopener,noreferrer')} />
+        <ServiceTile icon={<MultipleAppsIcon />} title="Claims Pay, TLO, N2uitive & ISO" onClick={() => onNavigate('cloudflare-status')} />
         <ServiceTile icon={<FamilyIcon />} title="RADAR & Member Validation" onClick={handleRadarClick} />
       </main>
     </div>

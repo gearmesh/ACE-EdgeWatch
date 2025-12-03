@@ -11,6 +11,7 @@ import CitrixPage from './components/CitrixPage';
 import BigIPPage from './components/BigIPPage';
 import SmartITPage from './components/SmartITPage';
 import RadarStatusPage from './components/RadarStatusPage';
+import CloudflareStatusPage from './components/CloudflareStatusPage';
 
 export type Page = 
   'home' | 
@@ -31,7 +32,8 @@ export type Page =
   'citrix' |
   'bigip' |
   'smartit' |
-  'radar-status';
+  'radar-status' |
+  'cloudflare-status';
 
 const App: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<Page>('home');
@@ -147,6 +149,8 @@ const App: React.FC = () => {
         return <SmartITPage onBack={() => navigate('home')} />;
       case 'radar-status':
         return <RadarStatusPage onBack={() => navigate('application')} />;
+      case 'cloudflare-status':
+        return <CloudflareStatusPage onBack={() => navigate('application')} />;
       default:
         return <HomePage onNavigate={navigate} />;
     }
