@@ -66,7 +66,7 @@ const ApplicationPage: React.FC<ApplicationPageProps> = ({ onNavigate }) => {
     <div className="flex flex-col min-h-screen p-4 relative">
       <MessageBox 
         isOpen={showRadarPopup} 
-        message="RADAR & Member Validation is often an issue downstream from Bing Maps" 
+        message="RADAR and Member Validation may run slowly if Bing Maps is affected. Tap OK to test Bing and Google Maps health." 
         onConfirm={handleRadarConfirm} 
       />
 
