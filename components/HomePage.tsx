@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import type { Page } from '../App';
 import { EyeIcon, UserIcon, CloudIcon, ComputerIcon, BMCHelixIcon } from './icons';
 
@@ -54,7 +54,27 @@ const NavButton: React.FC<NavButtonProps> = ({ icon, title, description, accentC
     );
 };
 
+const MessageBox: React.FC<{ isOpen: boolean; message: string; onConfirm: () => void }> = ({ isOpen, message, onConfirm }) => {
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4 backdrop-blur-sm animate-[fade-in-up_0.2s_ease-out]">
+      <div className="bg-slate-800 border border-slate-600 rounded-xl shadow-2xl max-w-sm w-full p-6 text-center ring-1 ring-white/10">
+        <p className="text-white text-lg mb-6 font-medium leading-relaxed">{message}</p>
+        <button
+          onClick={onConfirm}
+          className="bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-3 px-8 rounded-lg transition-all transform hover:scale-105 shadow-lg shadow-cyan-500/20"
+        >
+          OK
+        </button>
+      </div>
+    </div>
+  );
+};
+
 const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
+  const [showSmartITPopup, setShowSmartITPopup] = useState(false);
+
   const playClickSound = () => {
     try {
       if (typeof window === 'undefined') return;
@@ -79,11 +99,26 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
 
   const handleButtonClick = (page: Page) => {
     playClickSound();
-    onNavigate(page);
+    if (page === 'smartit') {
+        setShowSmartITPopup(true);
+    } else {
+        onNavigate(page);
+    }
+  };
+
+  const handleSmartITConfirm = () => {
+      setShowSmartITPopup(false);
+      onNavigate('smartit');
   };
 
   return (
     <div className="relative min-h-screen bg-[#0B1120] text-white font-sans selection:bg-cyan-500/30 overflow-hidden">
+        <MessageBox 
+            isOpen={showSmartITPopup}
+            message="ACE Smart IT is loading. This may take a moment"
+            onConfirm={handleSmartITConfirm}
+        />
+
         {/* Ambient Background Gradients */}
         <div className="fixed inset-0 pointer-events-none">
             <div className="absolute -top-[10%] -left-[10%] w-[60%] h-[60%] rounded-full bg-blue-900/10 blur-[100px]" />
@@ -153,15 +188,15 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
 
             {/* Minimal Footer */}
             <footer className="mt-12 text-center space-y-2 pb-6">
-                <p className="text-sm font-medium text-slate-500">
-                    Enterprise Engineering
+                <p className="text-xl font-bold text-white drop-shadow-lg tracking-wide">
+                    EUC Enterprise Engineering
                 </p>
-                <div className="flex justify-center items-center gap-2 text-[10px] text-slate-600 uppercase tracking-wider">
+                <div className="flex justify-center items-center gap-3 text-sm font-semibold text-cyan-100 uppercase tracking-widest">
                     <span>Greg Messemer</span>
-                    <span className="text-slate-700">•</span>
+                    <span className="text-cyan-400">•</span>
                     <span>Mauricio Romero</span>
                 </div>
-                <p className="text-[10px] text-slate-700 pt-2">
+                <p className="text-[10px] text-slate-500 pt-4">
                     Data provided by DownDetector & Official Status Pages
                 </p>
             </footer>

@@ -88,13 +88,18 @@ const ApplicationPage: React.FC<ApplicationPageProps> = ({ onNavigate }) => {
             subtitle="AWS"
             onClick={() => window.open('https://downdetector.com/status/aws-amazon-web-services/', '_blank', 'noopener,noreferrer')} 
         />
-        <ServiceTile icon={<FamilyIcon />} title="RADAR & Member Validation" onClick={handleRadarClick} />
+        <ServiceTile 
+          icon={<FamilyIcon />} 
+          title="RADAR & Member Validation" 
+          subtitle="Bing & Google Maps"
+          onClick={handleRadarClick} 
+        />
         
         {/* Row 2 */}
         <ServiceTile 
           icon={<KeyIcon />} 
           title="SSO" 
-          subtitle="(Azure Downdetector)" 
+          subtitle="per Azure Downdetector" 
           onClick={() => window.open('https://downdetector.com/status/windows-azure/', '_blank', 'noopener,noreferrer')} 
         />
         <ServiceTile 
@@ -109,7 +114,12 @@ const ApplicationPage: React.FC<ApplicationPageProps> = ({ onNavigate }) => {
         <ServiceTile icon={<MailIcon />} title="Outlook" onClick={() => window.open('https://downdetector.com/status/outlook/', '_blank', 'noopener,noreferrer')} />
         
         {/* Row 4 */}
-        <ServiceTile icon={<MultipleAppsIcon />} title="Claims Pay, TLO, N2uitive & ISO" onClick={() => onNavigate('cloudflare-status')} />
+        <ServiceTile 
+          icon={<MultipleAppsIcon />} 
+          title="Claims Pay, TLO, N2uitive & ISO" 
+          subtitle="Cloudflare"
+          onClick={() => onNavigate('cloudflare-status')} 
+        />
       </main>
     </div>
   );

@@ -64,11 +64,23 @@ const SplashScreen: React.FC = () => {
              </p>
              <div className="h-[1px] w-12 bg-gradient-to-l from-transparent to-cyan-500/50"></div>
           </div>
+
+          {/* Credits Section - Moved Up and Brightened */}
+          <div className="pt-8 space-y-2">
+              <p className="text-xl font-bold text-white drop-shadow-lg tracking-wide">
+                 EUC Enterprise Engineering
+              </p>
+              <div className="flex justify-center items-center gap-3 text-sm font-semibold text-cyan-100 uppercase tracking-widest">
+                  <span>Greg Messemer</span>
+                  <span className="text-cyan-400">•</span>
+                  <span>Mauricio Romero</span>
+              </div>
+          </div>
         </div>
       </div>
 
-      {/* Bottom Loading Indicator */}
-      <div className="absolute bottom-16 z-10 flex flex-col items-center gap-3 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+      {/* Loading Indicator */}
+      <div className="absolute bottom-20 z-10 flex flex-col items-center gap-3 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
           <div className="h-0.5 w-32 bg-slate-800 rounded-full overflow-hidden">
               <div className="h-full w-full bg-gradient-to-r from-transparent via-cyan-500 to-transparent animate-[shimmer_1.5s_infinite]"></div>
           </div>
