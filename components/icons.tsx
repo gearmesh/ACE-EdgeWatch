@@ -31,21 +31,21 @@ export const EyeIcon: React.FC<{className?: string}> = ({className}) => (
   </svg>
 );
 
-export const UserIcon: React.FC = () => (
-  <svg {...iconProps} xmlns="http://www.w3.org/2000/svg">
+export const UserIcon: React.FC<{className?: string}> = ({className}) => (
+  <svg {...iconProps} className={className || iconProps.className} xmlns="http://www.w3.org/2000/svg">
     <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
   </svg>
 );
 
 
-export const CloudIcon: React.FC = () => (
-  <svg {...iconProps} xmlns="http://www.w3.org/2000/svg">
+export const CloudIcon: React.FC<{className?: string}> = ({className}) => (
+  <svg {...iconProps} className={className || iconProps.className} xmlns="http://www.w3.org/2000/svg">
     <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15a4.5 4.5 0 004.5 4.5H18a3.75 3.75 0 001.332-7.257 3 3 0 00-3.758-3.848 5.25 5.25 0 00-10.233 2.33A4.5 4.5 0 002.25 15z" />
   </svg>
 );
 
-export const ComputerIcon: React.FC = () => (
-    <svg {...iconProps} xmlns="http://www.w3.org/2000/svg">
+export const ComputerIcon: React.FC<{className?: string}> = ({className}) => (
+    <svg {...iconProps} className={className || iconProps.className} xmlns="http://www.w3.org/2000/svg">
         <path strokeLinecap="round" strokeLinejoin="round" d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-1.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25A2.25 2.25 0 015.25 3h13.5A2.25 2.25 0 0121 5.25z" />
     </svg>
 );
@@ -236,8 +236,8 @@ export const BigIPIcon: React.FC<{className?: string}> = ({className}) => (
 </svg>
 );
 
-export const BMCHelixIcon: React.FC = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-white" viewBox="0 0 32 32" fill="currentColor">
+export const BMCHelixIcon: React.FC<{className?: string}> = ({className}) => (
+    <svg xmlns="http://www.w3.org/2000/svg" className={className || "h-8 w-8 text-white"} viewBox="0 0 32 32" fill="currentColor">
         <path d="M12.789 2.133c-6.111 0.011-10.933 5.433-10.1 11.456 0.611 4.5 3.989 8.278 8.444 9.178 0.356 0.078 0.733 0.111 1.1 0.111 5.922-0.011 10.7-5.178 10.333-11.1-0.267-4.144-3.233-7.589-7.278-8.5-0.167-0.033-0.344-0.056-0.511-0.089l-0.011 0.033c0.1 0.022 0.211 0.044 0.311 0.067 3.322 0.744 5.756 3.6 5.989 7.033 0.311 4.8-3.1 9.078-7.856 9.544-4.822 0.489-9.178-2.811-9.833-7.511-0.7-5.022 2.767-9.489 7.744-9.9l0.189-0.011c-1.122-0.656-2.433-1.044-3.8-1.078h-0.011zM19.211 19.867c6.111-0.011 10.933-5.433 10.1-11.456-0.611-4.5-3.989-8.278-8.444-9.178-0.356-0.078-0.733-0.111-1.1-0.111-5.922 0.011-10.7 5.178-10.333 11.1 0.267 4.144 3.233 7.589 7.278 8.5 0.167 0.033 0.344 0.056 0.511 0.089l0.011-0.033c-0.1-0.022-0.211-0.044-0.311-0.067-3.322-0.744-5.756-3.6-5.989-7.033-0.311-4.8 3.1-9.078 7.856-9.544 4.822-0.489 9.178 2.811 9.833 7.511 0.7 5.022-2.767 9.489-7.744 9.9l-0.189 0.011c1.122 0.656 2.433 1.044 3.8 1.078h0.011z"/>
     </svg>
 );

@@ -60,7 +60,7 @@ const SplashScreen: React.FC = () => {
           <div className="flex items-center justify-center gap-4 mt-2">
              <div className="h-[1px] w-12 bg-gradient-to-r from-transparent to-cyan-500/50"></div>
              <p className="text-xs text-cyan-500 font-semibold tracking-[0.3em] uppercase drop-shadow-md">
-                System Status Monitor
+                CHECK THE CLOUD'S PULSE
              </p>
              <div className="h-[1px] w-12 bg-gradient-to-l from-transparent to-cyan-500/50"></div>
           </div>
