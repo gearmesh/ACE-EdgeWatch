@@ -277,3 +277,22 @@ export const CarCrashIcon: React.FC = () => (
         <path strokeLinecap="round" strokeLinejoin="round" d="M12 1.5l1.2 3.6h3.6l-3 2.4 1.2 3.6-3-2.4-3 2.4 1.2-3.6-3-2.4h3.6z" fill="currentColor" opacity="0.9" />
     </svg>
 );
+
+export const TableauIcon: React.FC<{className?: string}> = ({className}) => (
+    <svg {...iconProps} className={className || iconProps.className} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+        {/* Simplified Tableau Logo Shape (Plus sign arrangement) */}
+        <path d="M11.25 12.75h-3v-1.5h3v-3h1.5v3h3v1.5h-3v3h-1.5v-3Z" /> 
+        <circle cx="7" cy="11.5" r="1.5" opacity="0.8" />
+        <circle cx="17" cy="11.5" r="1.5" opacity="0.8" />
+        <circle cx="12" cy="6.5" r="1.5" opacity="0.8" />
+        <circle cx="12" cy="16.5" r="1.5" opacity="0.8" />
+    </svg>
+);
+
+export const MuleSoftIcon: React.FC<{className?: string}> = ({className}) => (
+    <svg {...iconProps} className={className || iconProps.className} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        {/* Stylized M / Mule head shape */}
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 20V8l8 5 8-5v12" />
+        <circle cx="12" cy="18" r="2" fill="currentColor" />
+    </svg>
+);

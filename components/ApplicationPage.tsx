@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import type { Page } from '../App';
-import { BackArrowIcon, CartIcon, MailIcon, PhoneIcon, KeyIcon, PlaceholderIcon, CloudIcon, MultipleAppsIcon, FamilyIcon } from './icons';
+import { BackArrowIcon, CartIcon, MailIcon, PhoneIcon, KeyIcon, PlaceholderIcon, CloudIcon, MultipleAppsIcon, FamilyIcon, TableauIcon, MuleSoftIcon } from './icons';
 
 interface ApplicationPageProps {
   onNavigate: (page: Page) => void;
@@ -42,7 +42,7 @@ const MessageBox: React.FC<{ isOpen: boolean; message: string; onConfirm: () => 
   return (
     <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4">
       <div className="bg-slate-800 border border-slate-600 rounded-lg shadow-2xl max-w-sm w-full p-6 text-center">
-        <p className="text-white text-lg mb-6">{message}</p>
+        <p className="text-white text-lg mb-6 leading-relaxed">{message}</p>
         <button
           onClick={onConfirm}
           className="bg-cyan-500 hover:bg-cyan-600 text-white font-semibold py-2 px-8 rounded transition-colors"
@@ -55,23 +55,44 @@ const MessageBox: React.FC<{ isOpen: boolean; message: string; onConfirm: () => 
 };
 
 const ApplicationPage: React.FC<ApplicationPageProps> = ({ onNavigate }) => {
-  const [showRadarPopup, setShowRadarPopup] = useState(false);
+  const [popupState, setPopupState] = useState<{ isOpen: boolean; message: string; onConfirm: () => void }>({
+    isOpen: false,
+    message: '',
+    onConfirm: () => {},
+  });
 
-  const handleRadarClick = () => {
-    setShowRadarPopup(true);
+  const closePopup = () => {
+    setPopupState((prev) => ({ ...prev, isOpen: false }));
   };
 
-  const handleRadarConfirm = () => {
-    setShowRadarPopup(false);
-    onNavigate('radar-status');
+  const handleRadarClick = () => {
+    setPopupState({
+      isOpen: true,
+      message: "RADAR and Member Validation may run slowly if Bing Maps is affected. Tap OK to test Bing and Google Maps health.",
+      onConfirm: () => {
+        closePopup();
+        onNavigate('radar-status');
+      }
+    });
+  };
+
+  const handleSalesforceProductClick = (productName: string, url: string) => {
+    setPopupState({
+      isOpen: true,
+      message: `The ${productName} status page does not support direct region linking. Please check the 'Americas' box manually on the next screen to filter results.`,
+      onConfirm: () => {
+        closePopup();
+        window.open(url, '_blank', 'noopener,noreferrer');
+      }
+    });
   };
 
   return (
     <div className="flex flex-col min-h-screen p-4 relative">
       <MessageBox 
-        isOpen={showRadarPopup} 
-        message="RADAR and Member Validation may run slowly if Bing Maps is affected. Tap OK to test Bing and Google Maps health." 
-        onConfirm={handleRadarConfirm} 
+        isOpen={popupState.isOpen} 
+        message={popupState.message} 
+        onConfirm={popupState.onConfirm} 
       />
 
       <header className="flex items-center mb-6">
@@ -97,6 +118,18 @@ const ApplicationPage: React.FC<ApplicationPageProps> = ({ onNavigate }) => {
         
         {/* Row 2 */}
         <ServiceTile 
+            icon={<TableauIcon />} 
+            title="Tableau" 
+            onClick={() => handleSalesforceProductClick('Tableau', 'https://status.salesforce.com/products/Tableau')} 
+        />
+        <ServiceTile 
+            icon={<MuleSoftIcon />} 
+            title="MuleSoft" 
+            onClick={() => handleSalesforceProductClick('MuleSoft', 'https://status.salesforce.com/products/Mulesoft')} 
+        />
+
+        {/* Row 3 */}
+        <ServiceTile 
           icon={<KeyIcon />} 
           title="SSO" 
           subtitle="per Azure Downdetector" 
@@ -109,11 +142,11 @@ const ApplicationPage: React.FC<ApplicationPageProps> = ({ onNavigate }) => {
           onClick={() => window.open('https://portal.azure.com/#view/Microsoft_Azure_Health/AzureHealthBrowseBlade/~/serviceIssues', '_blank', 'noopener,noreferrer')} 
         />
         
-        {/* Row 3 */}
+        {/* Row 4 */}
         <ServiceTile icon={<PhoneIcon />} title="Intune" onClick={() => window.open('https://statusgator.com/services/microsoft-intune', '_blank', 'noopener,noreferrer')} />
         <ServiceTile icon={<MailIcon />} title="Outlook" onClick={() => window.open('https://downdetector.com/status/outlook/', '_blank', 'noopener,noreferrer')} />
         
-        {/* Row 4 */}
+        {/* Row 5 */}
         <ServiceTile 
           icon={<MultipleAppsIcon />} 
           title="Claims Pay, TLO, N2uitive & ISO" 
