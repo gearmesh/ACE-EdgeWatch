@@ -41,9 +41,9 @@ const RemoteAccessPage: React.FC<RemoteAccessPageProps> = ({ onNavigate }) => {
         <h1 className="text-xl font-bold ml-2">Remote Access Portals</h1>
       </header>
       <main className="grid grid-cols-2 gap-4">
-        <ServiceTile icon={<PulseSecureIcon />} title="PulseSecure" onClick={() => onNavigate('pulsesecure')} />
-        <ServiceTile icon={<CitrixIcon />} title="Citrix" onClick={() => onNavigate('citrix')} />
-        <ServiceTile icon={<BigIPIcon />} title="BIG-IP F5" onClick={() => onNavigate('bigip')} />
+        <ServiceTile icon={<PulseSecureIcon className="h-16 w-16" />} title="PulseSecure" onClick={() => onNavigate('pulsesecure')} />
+        <ServiceTile icon={<CitrixIcon className="h-16 w-16" />} title="Citrix" onClick={() => onNavigate('citrix')} />
+        <ServiceTile icon={<BigIPIcon className="h-16 w-16" />} title="BIG-IP F5" onClick={() => onNavigate('bigip')} />
       </main>
     </div>
   );

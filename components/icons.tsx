@@ -143,26 +143,97 @@ export const MSTeamsIcon: React.FC = () => (
     </svg>
 );
 
-export const PulseSecureIcon: React.FC = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-white" viewBox="0 0 24 24">
-        <path d="M10 3 H14 C16.2,3 18,4.8 18,7 V9 C18,11.2 16.2,13 14,13 H10 V15 C10,16.1 9.1,17 8,17 H5 V14 C5,12.9 5.9,12 7,12 H10 V3 Z" fill="#4ade80" />
-        <path d="M8 17 V21 H17 V17 H8 Z" fill="white" />
-    </svg>
+export const PulseSecureIcon: React.FC<{className?: string}> = ({className}) => (
+<svg xmlns="http://www.w3.org/2000/svg" className={className || "h-8 w-8"} viewBox="0 0 48 48">
+    {/* 1. Background: Standard Gray (#6B7280) 
+        - 48x48 Container
+        - Rounded corners (rx=8)
+    */}
+    <rect width="48" height="48" rx="8" fill="#6B7280" />
+    
+    {/* 2. Pulse Secure "S" Logo Group
+        - strokeWidth="5": Bold thickness matches the uploaded png.
+        - strokeLinecap="round": Essential for the "GoodIcon" look.
+    */}
+    <g fill="none" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round">
+        
+        {/* Green Top Loop (Upper Hook)
+            - Start: Left-Middle (17, 23)
+            - Top: (24, 15)
+            - Right: (31, 22)
+            - End: (27, 26) -> RETRACTED. 
+              (Previous was 28,27 which was too close to center. 
+               27,26 pulls it back up/right to clear the gap.)
+        */}
+        <path 
+            d="M 17 23 L 24 15 L 31 22 L 27 26" 
+            stroke="#4ade80" 
+        />
+
+        {/* White Bottom Loop (Lower Hook)
+            - Start: Right-Middle (31, 25)
+            - Bottom: (24, 33)
+            - Left: (17, 26)
+            - End: (21, 22) -> RETRACTED.
+              (Previous was 20,21. 
+               21,22 pulls it down/left away from the green hook.)
+        */}
+        <path 
+            d="M 31 25 L 24 33 L 17 26 L 21 22" 
+            stroke="white" 
+        />
+    </g>
+</svg>
 );
 
-export const CitrixIcon: React.FC = () => (
-    <svg {...iconProps} xmlns="http://www.w3.org/2000/svg" stroke="none" fill="none" viewBox="0 0 24 24">
-        <path d="M4.93,13.5A9,9,0,0,1,19.07,13.5" stroke="#F97316" strokeWidth="2.5" strokeLinecap="round" />
-        <path d="M7.76,10.67A5,5,0,0,1,16.24,10.67" stroke="#F97316" strokeWidth="2.5" strokeLinecap="round" />
-        <circle cx="12" cy="16.5" r="1.5" fill="#F97316" />
-    </svg>
+export const CitrixIcon: React.FC<{className?: string}> = ({className}) => (
+<svg {...iconProps} className={className || iconProps.className} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
+    {/* Scaling Group:
+      - scale(0.917): Shrinks the content to ~22px width (leaving 1px padding on each side).
+      - translate(1, 1): Centers the shrunk content back into the 24x24 box.
+    */}
+    <g transform="translate(1, 1) scale(0.917)">
+        
+        {/* Background Circle (Citrix Brand Blue) */}
+        <circle cx="12" cy="12" r="12" fill="#0067B9" />
+        
+        {/* Signal Arcs 
+            - Grouped to apply shared styles (white stroke, round caps)
+        */}
+        <g stroke="white" strokeWidth="2.5" strokeLinecap="round">
+            {/* Inner Arc */}
+            <path d="M15.9,9.75 A4.5,4.5 0 1,0 15.9,14.25" />
+            
+            {/* Outer Arc */}
+            <path d="M18.9,8 A8,8 0 1,0 18.9,16" />
+        </g>
+        
+        {/* Center Dot */}
+        <circle cx="12" cy="12" r="1.5" fill="white" />
+    </g>
+</svg>
 );
 
-export const BigIPIcon: React.FC = () => (
-  <svg {...iconProps} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="none">
-    <circle cx="12" cy="12" r="10" fill="#DC2626"/>
-    <path d="M12.2,17.25 C12.2,17.25 15,16.5 15,13 C15,9.5 12.2,7 12.2,7 L12.2,9.25 C12.2,9.25 13.25,10 13.25,13 C13.25,16 12.2,15 12.2,15 L12.2,17.25 Z M9,7 L9,17.25 L11,17.25 L11,7 L9,7 Z" fill="white" />
-  </svg>
+export const BigIPIcon: React.FC<{className?: string}> = ({className}) => (
+<svg {...iconProps} className={className || iconProps.className} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="none">
+    {/* Red Circle (F5 Brand Red) */}
+    <circle cx="12" cy="12" r="10" fill="#E31E29"/>
+    
+    {/* F5 Text Logo */}
+    <text 
+        x="12" 
+        y="12" 
+        dy=".35em" 
+        textAnchor="middle" 
+        fill="white" 
+        fontFamily="Arial, sans-serif" 
+        fontWeight="bold" 
+        fontSize="14"
+        letterSpacing="-1.5"
+    >
+        f5
+    </text>
+</svg>
 );
 
 export const BMCHelixIcon: React.FC = () => (

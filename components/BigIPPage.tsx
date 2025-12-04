@@ -7,13 +7,35 @@ interface BigIPPageProps {
 }
 
 const BigIPLogo: React.FC<{className?: string}> = ({className}) => (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className={className || "w-48 h-48 mx-auto"}>
-        <rect width="24" height="24" rx="4" fill="#1e293b" />
-        <g transform="scale(0.85) translate(1.8, 1.8)">
-            <circle cx="12" cy="12" r="10" fill="#DC2626"/>
-            <path d="M12.2,17.25 C12.2,17.25 15,16.5 15,13 C15,9.5 12.2,7 12.2,7 L12.2,9.25 C12.2,9.25 13.25,10 13.25,13 C13.25,16 12.2,15 12.2,15 L12.2,17.25 Z M9,7 L9,17.25 L11,17.25 L11,7 L9,7 Z" fill="white" />
-        </g>
-    </svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className={className || "w-48 h-48 mx-auto"}>
+    {/* Dark Background Container */}
+    <rect width="24" height="24" rx="4" fill="#1e293b" />
+    
+    {/* Scaling Group to give breathing room inside the square */}
+    <g transform="scale(0.85) translate(1.8, 1.8)">
+        {/* Red Circle (Updated to F5 Brand Red) */}
+        <circle cx="12" cy="12" r="10" fill="#E31E29"/>
+        
+        {/* The "f5" Text 
+           - Centered at 12,12
+           - 'dy' adjusts vertical alignment slightly for optical centering
+           - negative letter-spacing mimics the tight logo kerning
+        */}
+        <text 
+            x="12" 
+            y="12" 
+            dy=".35em"
+            textAnchor="middle" 
+            fill="white" 
+            fontFamily="Arial, sans-serif" 
+            fontWeight="bold" 
+            fontSize="14"
+            letterSpacing="-1.5"
+        >
+            f5
+        </text>
+    </g>
+</svg>
 );
 
 
