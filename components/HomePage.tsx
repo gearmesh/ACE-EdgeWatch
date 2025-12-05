@@ -113,6 +113,18 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
 
   return (
     <div className="relative min-h-screen bg-[#0B1120] text-white font-sans selection:bg-cyan-500/30 overflow-hidden">
+        <style>{`
+            @keyframes blink {
+              0%, 100% { transform: scaleY(1); opacity: 1; }
+              50% { transform: scaleY(0.1); opacity: 0.7; }
+            }
+            .animate-blink {
+              animation: blink 0.5s ease-in-out 1;
+              animation-delay: 1s;
+              transform-origin: center;
+            }
+        `}</style>
+        
         <MessageBox 
             isOpen={showSmartITPopup}
             message="ACE Smart IT is loading. This may take a moment"
@@ -128,18 +140,19 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
 
         <div className="relative z-10 flex flex-col min-h-screen p-6 max-w-md mx-auto">
             {/* Header Section */}
-            <header className="flex flex-col items-center mt-8 mb-12 space-y-5">
+            <header className="flex flex-col items-center mt-1 mb-4 space-y-1">
                 {/* Logo with Glass Effect */}
                 <div className="relative group">
                     <div className="absolute inset-0 bg-cyan-500/20 blur-xl rounded-full opacity-50 group-hover:opacity-75 transition-opacity duration-500" />
                     <div className="relative p-4 rounded-full bg-slate-900/50 backdrop-blur-xl border border-white/10 shadow-2xl shadow-black/50 ring-1 ring-cyan-500/20 group-hover:ring-cyan-500/40 transition-all duration-300">
-                        <EyeIcon className="h-10 w-10 text-cyan-400 group-hover:scale-110 transition-transform duration-500" />
+                        <EyeIcon className="h-10 w-10 text-cyan-400 animate-blink" />
                     </div>
                 </div>
 
                 <div className="text-center space-y-1">
-                    <h1 className="text-3xl font-bold tracking-tight text-white drop-shadow-lg">
-                        ACE <span className="font-light text-slate-400">EdgeWatch</span>
+                    <h1 className="text-3xl font-bold tracking-tight text-white drop-shadow-lg flex items-baseline justify-center">
+                        ACE <span className="font-light text-slate-400 mx-2">EdgeWatch</span>
+                        <span className="text-sm text-cyan-500 font-bold">v2.0</span>
                     </h1>
                     <div className="flex items-center justify-center gap-2 opacity-80">
                          <div className="h-[1px] w-4 bg-cyan-800"></div>
@@ -154,27 +167,27 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
             {/* Main Navigation List */}
             <main className="flex-grow w-full space-y-4">
                 <NavButton
-                   icon={<BMCHelixIcon />}
-                   title="ACE Smart IT"
-                   description="Incidents, changes & dashboard metrics"
-                   accentColor="orange"
-                   onClick={() => handleButtonClick('smartit')}
-                />
-                
-                <NavButton
                    icon={<UserIcon />}
                    title="By Application"
                    description="Status for key enterprise applications"
                    accentColor="cyan"
                    onClick={() => handleButtonClick('application')}
                 />
-
+                
                 <NavButton
                    icon={<CloudIcon />}
                    title="By Cloud Provider"
                    description="AWS, Azure & Google Cloud health"
                    accentColor="indigo"
                    onClick={() => handleButtonClick('cloudprovider')}
+                />
+
+                <NavButton
+                   icon={<BMCHelixIcon />}
+                   title="ACE Smart IT"
+                   description="Incidents, changes & dashboard metrics"
+                   accentColor="orange"
+                   onClick={() => handleButtonClick('smartit')}
                 />
 
                 <NavButton
@@ -187,7 +200,7 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
             </main>
 
             {/* Minimal Footer */}
-            <footer className="mt-12 text-center space-y-2 pb-6">
+            <footer className="mt-2 text-center space-y-2 pb-4">
                 <p className="text-xl font-bold text-white drop-shadow-lg tracking-wide">
                     EUC Enterprise Engineering
                 </p>

@@ -49,7 +49,7 @@ const BigIPPage: React.FC<BigIPPageProps> = ({ onBack }) => {
         <h1 className="text-xl font-bold ml-2">BIG-IP F5</h1>
       </header>
       <main className="flex-grow flex flex-col items-center">
-        <div className="my-8">
+        <div className="mt-2 mb-6">
             <BigIPLogo className="w-40 h-40" />
         </div>
         
@@ -77,15 +77,17 @@ const BigIPPage: React.FC<BigIPPageProps> = ({ onBack }) => {
           </button>
         </div>
 
-        <div className="mt-8 px-4 text-center text-sm text-slate-400 max-w-sm">
-          <p>
+        <div className="mt-6 px-4 text-center text-sm text-slate-400 max-w-sm pb-8">
+          <p className="mb-2 font-bold">
             BIG-IP tests only verify that the site is accessible; it does not validate ACE access.
           </p>
-          <p className="mt-2">
+          <p>
             If you see the message
-            <br />
-            <span className="font-bold">'Your session could not be established'</span>
-            <br />
+          </p>
+          <p className="font-bold my-1">
+            'Your session could not be established'
+          </p>
+          <p>
             the test to that site <span className="text-green-400 font-bold underline">was</span> successful.
           </p>
         </div>

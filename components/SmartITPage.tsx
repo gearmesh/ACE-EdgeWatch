@@ -1,9 +1,11 @@
 
 import React from 'react';
-import { BackArrowIcon, PlaceholderIcon, CarCrashIcon } from './icons';
+import type { Page } from '../App';
+import { BackArrowIcon, PlaceholderIcon, CarCrashIcon, GiftIcon, QuestionIcon } from './icons';
 
 interface SmartITPageProps {
   onBack: () => void;
+  onNavigate: (page: Page) => void;
 }
 
 interface TileProps {
@@ -30,7 +32,7 @@ const ServiceTile: React.FC<TileProps> = ({ icon, title, onClick, disabled = fal
   );
 };
 
-const SmartITPage: React.FC<SmartITPageProps> = ({ onBack }) => {
+const SmartITPage: React.FC<SmartITPageProps> = ({ onBack, onNavigate }) => {
   return (
     <div className="flex flex-col min-h-screen p-4">
       <header className="flex items-center mb-6">
@@ -45,8 +47,16 @@ const SmartITPage: React.FC<SmartITPageProps> = ({ onBack }) => {
           title="Incidents" 
           onClick={() => window.open('https://aceitsm-or1.onbmc.com/dashboards/d/CmJnGbtVk/ace-incident-table-dashboard?orgId=897459146&from=now-30d&to=now', '_blank', 'noopener,noreferrer')}
         />
-        <ServiceTile icon={<PlaceholderIcon />} title="Coming Soon" disabled />
-        <ServiceTile icon={<PlaceholderIcon />} title="Coming Soon" disabled />
+        <ServiceTile 
+          icon={<GiftIcon className="h-8 w-8 text-blue-400" />} 
+          title="Share App" 
+          onClick={() => onNavigate('share')}
+        />
+        <ServiceTile 
+          icon={<QuestionIcon className="h-8 w-8 text-cyan-400" />} 
+          title="Help" 
+          onClick={() => onNavigate('help')}
+        />
         <ServiceTile icon={<PlaceholderIcon />} title="Coming Soon" disabled />
         <ServiceTile icon={<PlaceholderIcon />} title="Coming Soon" disabled />
         <ServiceTile icon={<PlaceholderIcon />} title="Coming Soon" disabled />

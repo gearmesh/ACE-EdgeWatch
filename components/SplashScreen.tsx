@@ -52,9 +52,10 @@ const SplashScreen: React.FC = () => {
 
         {/* Typography */}
         <div className="text-center animate-fade-in-up space-y-4">
-          <h1 className="text-5xl font-extrabold tracking-tight">
+          <h1 className="text-5xl font-extrabold tracking-tight flex items-baseline justify-center">
             <span className="text-white drop-shadow-lg">ACE</span>
             <span className="text-slate-400 font-light ml-3">EdgeWatch</span>
+            <span className="text-xl text-cyan-500 font-bold ml-2">v2.0</span>
           </h1>
           
           <div className="flex items-center justify-center gap-4 mt-2">

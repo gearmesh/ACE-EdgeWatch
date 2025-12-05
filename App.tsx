@@ -12,6 +12,8 @@ import BigIPPage from './components/BigIPPage';
 import SmartITPage from './components/SmartITPage';
 import RadarStatusPage from './components/RadarStatusPage';
 import CloudflareStatusPage from './components/CloudflareStatusPage';
+import SharePage from './components/SharePage';
+import HelpPage from './components/HelpPage';
 
 export type Page = 
   'home' | 
@@ -33,7 +35,9 @@ export type Page =
   'bigip' |
   'smartit' |
   'radar-status' |
-  'cloudflare-status';
+  'cloudflare-status' |
+  'share' |
+  'help';
 
 const App: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<Page>('home');
@@ -146,11 +150,15 @@ const App: React.FC = () => {
       case 'aceingress':
         return <RemoteAccessPage onNavigate={navigate} />;
       case 'smartit':
-        return <SmartITPage onBack={() => navigate('home')} />;
+        return <SmartITPage onBack={() => navigate('home')} onNavigate={navigate} />;
       case 'radar-status':
         return <RadarStatusPage onBack={() => navigate('application')} />;
       case 'cloudflare-status':
         return <CloudflareStatusPage onBack={() => navigate('application')} />;
+      case 'share':
+        return <SharePage onBack={() => navigate('smartit')} />;
+      case 'help':
+        return <HelpPage onBack={() => navigate('smartit')} />;
       default:
         return <HomePage onNavigate={navigate} />;
     }

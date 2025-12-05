@@ -68,6 +68,12 @@ export const PhoneIcon: React.FC = () => (
     </svg>
 );
 
+export const MessageIcon: React.FC = () => (
+    <svg {...iconProps} xmlns="http://www.w3.org/2000/svg">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 01.865-.501 48.172 48.172 0 003.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z" />
+    </svg>
+);
+
 export const KeyIcon: React.FC = () => (
     <svg {...iconProps} xmlns="http://www.w3.org/2000/svg">
         <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 5.25a3 3 0 013 3m3 0a6 6 0 01-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1121.75 8.25z" />
@@ -144,46 +150,15 @@ export const MSTeamsIcon: React.FC = () => (
 );
 
 export const PulseSecureIcon: React.FC<{className?: string}> = ({className}) => (
-<svg xmlns="http://www.w3.org/2000/svg" className={className || "h-8 w-8"} viewBox="0 0 48 48">
-    {/* 1. Background: Standard Gray (#6B7280) 
-        - 48x48 Container
-        - Rounded corners (rx=8)
-    */}
-    <rect width="48" height="48" rx="8" fill="#6B7280" />
-    
-    {/* 2. Pulse Secure "S" Logo Group
-        - strokeWidth="5": Bold thickness matches the uploaded png.
-        - strokeLinecap="round": Essential for the "GoodIcon" look.
-    */}
-    <g fill="none" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round">
-        
-        {/* Green Top Loop (Upper Hook)
-            - Start: Left-Middle (17, 23)
-            - Top: (24, 15)
-            - Right: (31, 22)
-            - End: (27, 26) -> RETRACTED. 
-              (Previous was 28,27 which was too close to center. 
-               27,26 pulls it back up/right to clear the gap.)
-        */}
-        <path 
-            d="M 17 23 L 24 15 L 31 22 L 27 26" 
-            stroke="#4ade80" 
-        />
-
-        {/* White Bottom Loop (Lower Hook)
-            - Start: Right-Middle (31, 25)
-            - Bottom: (24, 33)
-            - Left: (17, 26)
-            - End: (21, 22) -> RETRACTED.
-              (Previous was 20,21. 
-               21,22 pulls it down/left away from the green hook.)
-        */}
-        <path 
-            d="M 31 25 L 24 33 L 17 26 L 21 22" 
-            stroke="white" 
-        />
-    </g>
-</svg>
+    <svg 
+        xmlns="http://www.w3.org/2000/svg" 
+        viewBox="0 0 43 45" 
+        className={className || "h-8 w-8"}
+    >
+        <path fill="#ffffff" d="M0 0L0 45L43 45L43 0L0 0z"/>
+        <path fill="#5dbb47" d="M33 35C32.1012 26.2653 22.4823 18.3608 16 13L16 12L22 6L23 6L29 12L29 13L25 16C32.7897 22.1889 34.3451 5.63803 23.9999 2.81854C18.2347 1.24731 11.0331 9.53087 13.076 14.9895C15.7428 22.1149 26.451 31.7098 33 35z"/>
+        <path fill="#19232b" d="M10 32L10 33C13.4435 36.4409 31.5002 49.5168 27 35L26 35L23 39C19.1563 35.1675 15.7653 30.228 10 32z"/>
+    </svg>
 );
 
 export const CitrixIcon: React.FC<{className?: string}> = ({className}) => (
@@ -294,5 +269,17 @@ export const MuleSoftIcon: React.FC<{className?: string}> = ({className}) => (
         {/* Stylized M / Mule head shape */}
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 20V8l8 5 8-5v12" />
         <circle cx="12" cy="18" r="2" fill="currentColor" />
+    </svg>
+);
+
+export const GiftIcon: React.FC<{className?: string}> = ({className}) => (
+    <svg xmlns="http://www.w3.org/2000/svg" className={className || "h-6 w-6"} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M21 11.25v8.25a1.5 1.5 0 01-1.5 1.5H4.5a1.5 1.5 0 01-1.5-1.5v-8.25M12 4.875A2.625 2.625 0 109.375 7.5H12m0-2.625V7.5m0-2.625A2.625 2.625 0 1114.625 7.5H12m0 0V21m-8.625-9.75h18c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125h-18c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
+    </svg>
+);
+
+export const QuestionIcon: React.FC<{className?: string}> = ({className}) => (
+    <svg xmlns="http://www.w3.org/2000/svg" className={className || "h-8 w-8 text-white"} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M12 17.25h.007v.008H12v-.008z" />
     </svg>
 );
