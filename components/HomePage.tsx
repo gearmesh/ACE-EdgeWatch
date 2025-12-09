@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import type { Page } from '../App';
 import { EyeIcon, UserIcon, CloudIcon, ComputerIcon, BMCHelixIcon } from './icons';
-
+import { SpeedInsights } from "@vercel/speed-insights/next"
 interface HomePageProps {
   onNavigate: (page: Page) => void;
 }
