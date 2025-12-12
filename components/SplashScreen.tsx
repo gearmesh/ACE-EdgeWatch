@@ -2,6 +2,9 @@
 import React from 'react';
 import { EyeIcon } from './icons';
 
+// Injected by Vite at build time
+declare const __APP_VERSION__: string;
+
 const SplashScreen: React.FC = () => {
   return (
     <div className="relative flex flex-col items-center justify-center min-h-screen bg-[#0B1120] text-white overflow-hidden font-sans">
@@ -58,12 +61,15 @@ const SplashScreen: React.FC = () => {
             <span className="text-xl text-cyan-500 font-bold ml-2">v2.0</span>
           </h1>
           
-          <div className="flex items-center justify-center gap-4 mt-2">
-             <div className="h-[1px] w-12 bg-gradient-to-r from-transparent to-cyan-500/50"></div>
-             <p className="text-xs text-cyan-500 font-semibold tracking-[0.3em] uppercase drop-shadow-md">
-                CHECK THE CLOUD'S PULSE
-             </p>
-             <div className="h-[1px] w-12 bg-gradient-to-l from-transparent to-cyan-500/50"></div>
+          <div className="flex flex-col items-center">
+              <div className="flex items-center justify-center gap-4 mt-2">
+                 <div className="h-[1px] w-12 bg-gradient-to-r from-transparent to-cyan-500/50"></div>
+                 <p className="text-xs text-cyan-500 font-semibold tracking-[0.3em] uppercase drop-shadow-md">
+                    CHECK THE CLOUD'S PULSE
+                 </p>
+                 <div className="h-[1px] w-12 bg-gradient-to-l from-transparent to-cyan-500/50"></div>
+              </div>
+              <p className="text-[10px] text-cyan-800/80 mt-1 font-mono tracking-widest">{__APP_VERSION__}</p>
           </div>
 
           {/* Credits Section - Moved Up and Brightened */}

@@ -3,6 +3,9 @@ import React, { useState } from 'react';
 import type { Page } from '../App';
 import { EyeIcon, UserIcon, CloudIcon, ComputerIcon, BMCHelixIcon } from './icons';
 
+// Injected by Vite at build time
+declare const __APP_VERSION__: string;
+
 interface HomePageProps {
   onNavigate: (page: Page) => void;
 }
@@ -154,12 +157,15 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
                         ACE <span className="font-light text-slate-400 mx-2">EdgeWatch</span>
                         <span className="text-sm text-cyan-500 font-bold">v2.0</span>
                     </h1>
-                    <div className="flex items-center justify-center gap-2 opacity-80">
-                         <div className="h-[1px] w-4 bg-cyan-800"></div>
-                         <p className="text-[10px] font-bold tracking-[0.25em] text-cyan-500 uppercase">
-                            CHECK THE CLOUD'S PULSE
-                         </p>
-                         <div className="h-[1px] w-4 bg-cyan-800"></div>
+                    <div className="flex flex-col items-center">
+                        <div className="flex items-center justify-center gap-2 opacity-80">
+                             <div className="h-[1px] w-4 bg-cyan-800"></div>
+                             <p className="text-[10px] font-bold tracking-[0.25em] text-cyan-500 uppercase">
+                                CHECK THE CLOUD'S PULSE
+                             </p>
+                             <div className="h-[1px] w-4 bg-cyan-800"></div>
+                        </div>
+                        <p className="text-[9px] text-cyan-700 mt-1 font-mono">{__APP_VERSION__}</p>
                     </div>
                 </div>
             </header>

@@ -39,9 +39,38 @@ export type Page =
   'share' |
   'help';
 
+// Exit Confirmation Modal Component
+const ExitConfirmationModal: React.FC<{ isOpen: boolean; onConfirm: () => void; onCancel: () => void }> = ({ isOpen, onConfirm, onCancel }) => {
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-[100] p-4 backdrop-blur-sm animate-[fade-in-up_0.2s_ease-out]">
+      <div className="bg-slate-800 border border-slate-600 rounded-xl shadow-2xl max-w-sm w-full p-6 text-center ring-1 ring-white/10">
+        <h3 className="text-xl font-bold text-white mb-2">Exit App?</h3>
+        <p className="text-slate-300 mb-8 text-sm leading-relaxed">Are you sure you want to leave?</p>
+        <div className="flex gap-4 justify-center">
+            <button
+                onClick={onCancel}
+                className="flex-1 bg-slate-700 hover:bg-slate-600 text-white font-semibold py-3 px-4 rounded-lg transition-colors shadow-lg"
+            >
+                No
+            </button>
+            <button
+                onClick={onConfirm}
+                className="flex-1 bg-cyan-600 hover:bg-cyan-500 text-white font-semibold py-3 px-4 rounded-lg transition-colors shadow-lg shadow-cyan-500/20"
+            >
+                Yes
+            </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const App: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<Page>('home');
   const [showSplash, setShowSplash] = useState(true);
+  const [showExitConfirm, setShowExitConfirm] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -51,6 +80,7 @@ const App: React.FC = () => {
     return () => clearTimeout(timer);
   }, []);
 
+  // Handle Speech Synthesis
   useEffect(() => {
     if (!showSplash) {
       const speak = () => {
@@ -108,6 +138,53 @@ const App: React.FC = () => {
       }
     }
   }, [showSplash]);
+
+  // Intercept Swipe-to-Close / Back Button on Home Page
+  useEffect(() => {
+    // Only trap back navigation on Home and when splash is gone
+    if (currentPage === 'home' && !showSplash) {
+        // Push a dummy state to the history stack. 
+        // This ensures there is a "forward" state we are currently in, so "Back" goes to the previous one.
+        window.history.pushState({ page: 'home' }, '', window.location.href);
+
+        const handlePopState = (event: PopStateEvent) => {
+            // User pressed back or swiped back.
+            // Since we pushed a state, this event means we popped that state.
+            // We want to stop the user from leaving, so we show the modal.
+            
+            // Prevent default isn't strictly needed for popstate as the navigation already happened,
+            // but we stop propagation to be safe.
+            event.preventDefault();
+            setShowExitConfirm(true);
+        };
+
+        window.addEventListener('popstate', handlePopState);
+
+        return () => {
+            window.removeEventListener('popstate', handlePopState);
+        };
+    }
+  }, [currentPage, showSplash]);
+
+  const handleExitConfirm = () => {
+    setShowExitConfirm(false);
+    // User confirmed exit.
+    // We are currently in the state *before* the one we pushed (because popstate fired).
+    // To truly exit, we trigger another back action.
+    try {
+        window.history.back();
+    } catch (e) {
+        // Fallback if history is empty (unlikely if we pushed)
+        window.close();
+    }
+  };
+
+  const handleExitCancel = () => {
+    setShowExitConfirm(false);
+    // User wants to stay.
+    // Re-push the state to re-arm the trap for the next swipe.
+    window.history.pushState({ page: 'home' }, '', window.location.href);
+  };
 
   const navigate = useCallback((page: Page) => {
     setCurrentPage(page);
@@ -170,6 +247,11 @@ const App: React.FC = () => {
 
   return (
     <div className="bg-slate-900 min-h-screen text-white font-sans">
+      <ExitConfirmationModal 
+        isOpen={showExitConfirm} 
+        onConfirm={handleExitConfirm} 
+        onCancel={handleExitCancel} 
+      />
       <div className="container mx-auto max-w-md">
         {renderPage()}
       </div>
