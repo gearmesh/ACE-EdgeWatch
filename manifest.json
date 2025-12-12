@@ -1,0 +1,21 @@
+{
+  "name": "ACE EdgeWatch Service Status",
+  "short_name": "EdgeWatch",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0B1120",
+  "theme_color": "#0B1120",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/566/566723.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/566/566723.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

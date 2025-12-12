@@ -168,7 +168,7 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
                 <div className="text-center space-y-1">
                     <h1 className="text-3xl font-bold tracking-tight text-white drop-shadow-lg flex items-baseline justify-center">
                         ACE <span className="font-light text-slate-400 mx-2">EdgeWatch</span>
-                        <span className="text-sm text-cyan-500 font-bold">v2.0</span>
+                        <span className="text-sm text-cyan-500 font-bold">v2.5</span>
                     </h1>
                     <div className="flex flex-col items-center">
                         <div className="flex items-center justify-center gap-2 opacity-80">
