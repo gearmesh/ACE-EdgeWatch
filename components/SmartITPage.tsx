@@ -1,4 +1,11 @@
 
+/**
+ * Smart IT / BMC Helix Page
+ *
+ * Menu for accessing the ITSM dashboard (BMC Helix) for Incident/Change management.
+ * Also provides access to app utility features like "Share App" and "Help".
+ */
+
 import React from 'react';
 import type { Page } from '../App';
 import { BackArrowIcon, PlaceholderIcon, CarCrashIcon, GiftIcon, QuestionIcon } from './icons';

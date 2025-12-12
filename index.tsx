@@ -1,3 +1,13 @@
+
+/**
+ * Application Entry Point
+ * 
+ * This file is responsible for:
+ * 1. Finding the root DOM element in the HTML.
+ * 2. Mounting the React root.
+ * 3. wrapping the App in StrictMode and initializing performance monitoring (SpeedInsights).
+ */
+
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';

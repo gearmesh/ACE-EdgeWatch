@@ -1,4 +1,12 @@
 
+/**
+ * Cloud Provider Status Page
+ *
+ * Dashboard for monitoring major cloud infrastructure providers.
+ * Links to external status pages for Azure, AWS, Google Maps, Microsoft 365, etc.
+ * Includes specific modal guidance for Salesforce status checking.
+ */
+
 import React, { useState } from 'react';
 import type { Page } from '../App';
 import { BackArrowIcon, MapLocationIcon, CloudIcon, ServerIcon, BuildingIcon, SalesforceIcon, MSEntraIcon, MSTeamsIcon, CloudflareIcon } from './icons';

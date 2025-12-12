@@ -1,4 +1,11 @@
 
+/**
+ * Icon Library
+ *
+ * A centralized collection of SVG icons used throughout the application.
+ * All icons accept an optional `className` prop for Tailwind utility overrides.
+ */
+
 import React from 'react';
 
 const iconProps = {

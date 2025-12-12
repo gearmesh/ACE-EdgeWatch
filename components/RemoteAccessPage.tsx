@@ -1,4 +1,11 @@
 
+/**
+ * Remote Access Menu Component
+ *
+ * Provides navigation to the various remote access gateway status pages:
+ * PulseSecure, Citrix, and BIG-IP F5.
+ */
+
 import React from 'react';
 import type { Page } from '../App';
 import { BackArrowIcon, PulseSecureIcon, CitrixIcon, BigIPIcon } from './icons';

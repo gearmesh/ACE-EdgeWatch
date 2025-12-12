@@ -1,4 +1,13 @@
 
+/**
+ * Application Status Page
+ *
+ * Displays a grid of enterprise applications (E-Commerce, Tableau, Salesforce products, etc.).
+ * Each tile links to either an external status page (e.g., DownDetector) or an internal status view.
+ *
+ * Includes specific handling for products like Salesforce that require regional checks.
+ */
+
 import React, { useState } from 'react';
 import type { Page } from '../App';
 import { BackArrowIcon, CartIcon, MailIcon, PhoneIcon, KeyIcon, PlaceholderIcon, CloudIcon, MultipleAppsIcon, FamilyIcon, TableauIcon, MuleSoftIcon, CarIcon } from './icons';

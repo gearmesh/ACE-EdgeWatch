@@ -1,4 +1,12 @@
 
+/**
+ * Splash Screen Component
+ *
+ * Displayed during the initial application load.
+ * Features CSS-based animations, branding, build version information, and author credits.
+ * This component is unmounted by the parent App component after a set timeout.
+ */
+
 import React from 'react';
 import { EyeIcon } from './icons';
 
@@ -69,7 +77,7 @@ const SplashScreen: React.FC = () => {
                  </p>
                  <div className="h-[1px] w-12 bg-gradient-to-l from-transparent to-cyan-500/50"></div>
               </div>
-              <p className="text-[10px] text-cyan-800/80 mt-1 font-mono tracking-widest">{__APP_VERSION__}</p>
+              <p className="text-xs text-cyan-300 mt-2 font-mono tracking-widest font-bold">{__APP_VERSION__}</p>
           </div>
 
           {/* Credits Section - Moved Up and Brightened */}

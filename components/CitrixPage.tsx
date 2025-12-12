@@ -1,4 +1,11 @@
 
+/**
+ * Citrix Gateway Status Page
+ *
+ * Provides deep links to NetScaler Gateway login pages for CA, TX, and Load Balanced endpoints.
+ * Used for verifying external reachability of the Citrix environment.
+ */
+
 import React from 'react';
 import { BackArrowIcon } from './icons';
 

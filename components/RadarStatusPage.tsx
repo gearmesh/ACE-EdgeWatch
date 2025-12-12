@@ -1,4 +1,16 @@
 
+/**
+ * RADAR Status Page (Maps Monitoring)
+ *
+ * Checks the health status of Bing Maps and Google Maps.
+ * 
+ * Technical Implementation:
+ * 1. Scraping: Attempts to fetch status page HTML via CORS proxies (AllOrigins, CORSProxy.io).
+ *    It parses the HTML response text for known "Up" or "Down" keywords/classes.
+ * 2. Fallback (Direct Ping): If scraping fails, it attempts to load a generic 1x1 or tile image 
+ *    directly from the maps CDN. This is an effective way to verify connectivity even if CORS prevents reading the response data.
+ */
+
 import React, { useEffect, useState } from 'react';
 import { BackArrowIcon, MapLocationIcon } from './icons';
 

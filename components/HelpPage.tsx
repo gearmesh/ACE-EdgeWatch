@@ -1,6 +1,17 @@
 
+/**
+ * Help & Support Page
+ *
+ * Displays frequently asked questions about the app's purpose and maintenance.
+ * Provides a direct mail link to the engineering team.
+ * Displays the current build version.
+ */
+
 import React from 'react';
 import { BackArrowIcon, MailIcon } from './icons';
+
+// Injected by Vite at build time
+declare const __APP_VERSION__: string;
 
 interface HelpPageProps {
   onBack: () => void;
@@ -15,11 +26,14 @@ const HelpPage: React.FC<HelpPageProps> = ({ onBack }) => {
 
   return (
     <div className="flex flex-col min-h-screen p-4 text-white">
-      <header className="flex items-center mb-8">
-        <button onClick={onBack} className="p-2 -ml-2 hover:bg-white/10 rounded-full transition-colors">
-          <BackArrowIcon />
-        </button>
-        <h1 className="text-xl font-bold ml-2 tracking-wide">Help</h1>
+      <header className="mb-8">
+        <div className="flex items-center">
+            <button onClick={onBack} className="p-2 -ml-2 hover:bg-white/10 rounded-full transition-colors">
+            <BackArrowIcon />
+            </button>
+            <h1 className="text-xl font-bold ml-2 tracking-wide">Help</h1>
+        </div>
+        <p className="ml-12 text-sm text-cyan-400 font-mono font-bold mt-1">{__APP_VERSION__}</p>
       </header>
 
       <main className="flex-grow flex flex-col gap-8">

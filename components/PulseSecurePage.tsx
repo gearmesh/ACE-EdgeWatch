@@ -1,4 +1,11 @@
 
+/**
+ * PulseSecure Gateway Status Page
+ *
+ * Provides deep links to specific PulseSecure VPN gateways (CA, TX, and Load Balanced).
+ * Used to verify gateway reachability and login page rendering.
+ */
+
 import React from 'react';
 import { BackArrowIcon } from './icons';
 

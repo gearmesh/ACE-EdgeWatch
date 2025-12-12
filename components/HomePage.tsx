@@ -1,9 +1,21 @@
 
+/**
+ * Home Page Component
+ *
+ * This component acts as the main dashboard for the application.
+ * 
+ * Features:
+ * - Displays the primary navigation menu connecting to Application Status, Cloud Providers, Smart IT, etc.
+ * - Shows the application title and current build version.
+ * - Manages UI sound effects on interaction.
+ * - Displays an interstitial loading popup when navigating to Smart IT.
+ */
+
 import React, { useState } from 'react';
 import type { Page } from '../App';
 import { EyeIcon, UserIcon, CloudIcon, ComputerIcon, BMCHelixIcon } from './icons';
 
-// Injected by Vite at build time
+// Injected by Vite at build time via `vite.config.ts`
 declare const __APP_VERSION__: string;
 
 interface HomePageProps {
@@ -78,6 +90,7 @@ const MessageBox: React.FC<{ isOpen: boolean; message: string; onConfirm: () => 
 const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
   const [showSmartITPopup, setShowSmartITPopup] = useState(false);
 
+  // Audio Feedback Utility
   const playClickSound = () => {
     try {
       if (typeof window === 'undefined') return;
@@ -165,7 +178,7 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
                              </p>
                              <div className="h-[1px] w-4 bg-cyan-800"></div>
                         </div>
-                        <p className="text-[9px] text-cyan-700 mt-1 font-mono">{__APP_VERSION__}</p>
+                        <p className="text-[10px] text-cyan-400 mt-1 font-mono font-bold tracking-wide">{__APP_VERSION__}</p>
                     </div>
                 </div>
             </header>

@@ -1,4 +1,12 @@
 
+/**
+ * Share App Page
+ *
+ * Allows users to share the application link with colleagues via native mobile intents.
+ * - 'mailto:' for Email sharing
+ * - 'sms:' for Text Message sharing
+ */
+
 import React from 'react';
 import { BackArrowIcon, MailIcon, MessageIcon } from './icons';
 

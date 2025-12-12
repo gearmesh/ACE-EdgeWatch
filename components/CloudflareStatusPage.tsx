@@ -1,4 +1,16 @@
 
+/**
+ * Cloudflare Status Scraper Page
+ *
+ * Fetches the official Cloudflare Status page (HTML) via a CORS proxy and extracts status info.
+ * 
+ * Technical Implementation:
+ * - Fetches raw HTML string via proxy (CorsProxy.io or AllOrigins).
+ * - Uses the browser's DOMParser to convert the string into a DOM structure.
+ * - Queries the DOM for specific class names used by the status page provider to find the 'North America' region component.
+ * - Maps the status text (e.g., 'Operational', 'Degraded') to UI colors.
+ */
+
 import React, { useEffect, useState } from 'react';
 import { BackArrowIcon, CloudflareIcon } from './icons';
 

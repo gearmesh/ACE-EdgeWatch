@@ -1,4 +1,12 @@
 
+/**
+ * BIG-IP F5 Status Page
+ *
+ * Provides deep links to F5 BIG-IP APM (Access Policy Manager) portals.
+ * Note: These links verify site accessibility only. A "session could not be established"
+ * error often indicates a successful network connection to the appliance itself.
+ */
+
 import React from 'react';
 import { BackArrowIcon } from './icons';
 

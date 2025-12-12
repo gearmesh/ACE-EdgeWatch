@@ -6,7 +6,7 @@ const date = new Date();
 const yy = date.getFullYear().toString().slice(-2);
 const mm = (date.getMonth() + 1).toString().padStart(2, '0');
 const dd = date.getDate().toString().padStart(2, '0');
-const buildVersion = `Version ${yy}${mm}${dd}`;
+const buildVersion = `Build ${yy}${mm}${dd}`;
 
 export default defineConfig({
   plugins: [react()],

@@ -1,4 +1,14 @@
 
+/**
+ * Root Application Component
+ *
+ * Responsibilities:
+ * - Manages the global navigation state (Custom router implementation via `currentPage` state).
+ * - Controls the application lifecycle (Splash screen -> Main Content).
+ * - Handles global "Back" button interception to prevent accidental app closure on mobile.
+ * - Initializes Text-to-Speech (TTS) for the welcome message.
+ */
+
 import React, { useState, useCallback, useEffect } from 'react';
 import HomePage from './components/HomePage';
 import ApplicationPage from './components/ApplicationPage';
@@ -72,6 +82,7 @@ const App: React.FC = () => {
   const [showSplash, setShowSplash] = useState(true);
   const [showExitConfirm, setShowExitConfirm] = useState(false);
 
+  // LIFECYCLE: Splash Screen Timer
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowSplash(false);
@@ -80,7 +91,9 @@ const App: React.FC = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  // Handle Speech Synthesis
+  // EFFECT: Handle Speech Synthesis (Welcome Message)
+  // This effect runs once the splash screen is dismissed. It attempts to find a
+  // British female voice to announce the welcome message.
   useEffect(() => {
     if (!showSplash) {
       const speak = () => {
@@ -93,7 +106,7 @@ const App: React.FC = () => {
 
           const voices = window.speechSynthesis.getVoices();
           
-          // Heuristic to find a British female voice. Voice names and availability vary widely.
+          // Heuristic to find a British female voice. Voice names and availability vary widely across browsers/OS.
           let selectedVoice = voices.find(voice => 
             voice.lang === 'en-GB' && 
             (voice.name.includes('Female') || voice.name.toLowerCase().includes('susan') || voice.name.toLowerCase().includes('hazel') || voice.name.toLowerCase().includes('kate'))
@@ -124,7 +137,7 @@ const App: React.FC = () => {
 
       if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
         const synth = window.speechSynthesis;
-        // Voices list is loaded asynchronously.
+        // Voices list is loaded asynchronously in some browsers (e.g. Chrome)
         if (synth.getVoices().length === 0) {
           synth.addEventListener('voiceschanged', speak);
         } else {
@@ -139,12 +152,14 @@ const App: React.FC = () => {
     }
   }, [showSplash]);
 
-  // Intercept Swipe-to-Close / Back Button on Home Page
+  // EFFECT: Intercept Swipe-to-Close / Back Button on Home Page
+  // We manipulate the History API to create a "trap" state. If the user hits back/swipes back
+  // while on the home page, we catch the event and show a modal instead of leaving the page.
   useEffect(() => {
     // Only trap back navigation on Home and when splash is gone
     if (currentPage === 'home' && !showSplash) {
         // Push a dummy state to the history stack. 
-        // This ensures there is a "forward" state we are currently in, so "Back" goes to the previous one.
+        // This ensures there is a "forward" state we are currently in, so "Back" goes to the previous one (which triggers popstate).
         window.history.pushState({ page: 'home' }, '', window.location.href);
 
         const handlePopState = (event: PopStateEvent) => {

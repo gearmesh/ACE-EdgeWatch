@@ -1,4 +1,11 @@
 
+/**
+ * Generic Service Page
+ *
+ * A reusable placeholder component for services that do not yet have a dedicated
+ * dashboard or API integration. It displays a static "All Systems Operational" message.
+ */
+
 import React from 'react';
 import { BackArrowIcon } from './icons';
 
