@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import type { Page } from '../App';
-import { BackArrowIcon, CartIcon, MailIcon, PhoneIcon, KeyIcon, PlaceholderIcon, CloudIcon, MultipleAppsIcon, FamilyIcon, TableauIcon, MuleSoftIcon } from './icons';
+import { BackArrowIcon, CartIcon, MailIcon, PhoneIcon, KeyIcon, PlaceholderIcon, CloudIcon, MultipleAppsIcon, FamilyIcon, TableauIcon, MuleSoftIcon, CarIcon } from './icons';
 
 interface ApplicationPageProps {
   onNavigate: (page: Page) => void;
@@ -152,6 +152,12 @@ const ApplicationPage: React.FC<ApplicationPageProps> = ({ onNavigate }) => {
           title="Claims Pay, TLO, N2uitive & ISO" 
           subtitle="Cloudflare"
           onClick={() => onNavigate('cloudflare-status')} 
+        />
+        <ServiceTile 
+            icon={<CarIcon />} 
+            title="CA DMV" 
+            subtitle="DownDetector"
+            onClick={() => window.open('https://downdetector.com/status/california-dmv/', '_blank', 'noopener,noreferrer')} 
         />
       </main>
     </div>

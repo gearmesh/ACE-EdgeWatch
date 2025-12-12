@@ -253,6 +253,14 @@ export const CarCrashIcon: React.FC = () => (
     </svg>
 );
 
+export const CarIcon: React.FC<{className?: string}> = ({className}) => (
+    <svg {...iconProps} className={className || iconProps.className} xmlns="http://www.w3.org/2000/svg">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M18.882 9.75H5.118a3.75 3.75 0 00-3.75 3.75v4.5h1.5v-1.5h18v1.5h1.5v-4.5a3.75 3.75 0 00-3.75-3.75z" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M5.118 9.75l1.5-4.5h10.764l1.5 4.5" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M7.5 17.25a1.5 1.5 0 100 3 1.5 1.5 0 000-3zM16.5 17.25a1.5 1.5 0 100 3 1.5 1.5 0 000-3z" />
+    </svg>
+);
+
 export const TableauIcon: React.FC<{className?: string}> = ({className}) => (
     <svg {...iconProps} className={className || iconProps.className} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
         {/* Simplified Tableau Logo Shape (Plus sign arrangement) */}
