@@ -8,7 +8,7 @@
 
 import React from 'react';
 import type { Page } from '../App';
-import { BackArrowIcon, PlaceholderIcon, CarCrashIcon, GiftIcon, QuestionIcon } from './icons';
+import { BackArrowIcon, PlaceholderIcon, CarCrashIcon, GiftIcon, QuestionIcon, LightningIcon, SearchEyeIcon, TableListIcon } from './icons';
 
 interface SmartITPageProps {
   onBack: () => void;
@@ -49,24 +49,47 @@ const SmartITPage: React.FC<SmartITPageProps> = ({ onBack, onNavigate }) => {
         <h1 className="text-xl font-bold ml-2">ACE Smart IT</h1>
       </header>
       <main className="grid grid-cols-2 gap-4">
+        {/* 1. ACE Outages Dashboard */}
+        <ServiceTile 
+          icon={<LightningIcon />} 
+          title="ACE Outages Dashboard" 
+          onClick={() => window.open('https://aceitsm-or1.onbmc.com/dashboards/d/c97df517-795d-4a3b-9920-c8cca2139a8e/ace-outage-dashboard?orgId=897459146', '_blank', 'noopener,noreferrer')}
+        />
+
+        {/* 2. ACE Problem Investigation */}
+        <ServiceTile 
+          icon={<SearchEyeIcon />} 
+          title="ACE Problem Investigation" 
+          onClick={() => window.open('https://aceitsm-or1.onbmc.com/dashboards/d/f0c4c61b-cebb-415e-86b1-6c0849c0116b/ace-outage-problem-investigation?orgId=897459146', '_blank', 'noopener,noreferrer')}
+        />
+
+        {/* 3. ACE Incident Table Dashboard */}
+        <ServiceTile 
+          icon={<TableListIcon />} 
+          title="ACE Incident Table Dashboard" 
+          onClick={() => window.open('https://aceitsm-or1.onbmc.com/dashboards/d/CmJnGbtVk/ace-incident-table-dashboard?orgId=897459146', '_blank', 'noopener,noreferrer')}
+        />
+
+        {/* 4. Incidents Dashboard (Renamed from Incidents) */}
         <ServiceTile 
           icon={<CarCrashIcon />} 
-          title="Incidents" 
+          title="Incidents Dashboard" 
           onClick={() => window.open('https://aceitsm-or1.onbmc.com/dashboards/d/CmJnGbtVk/ace-incident-table-dashboard?orgId=897459146&from=now-30d&to=now', '_blank', 'noopener,noreferrer')}
         />
-        <ServiceTile 
-          icon={<GiftIcon className="h-8 w-8 text-blue-400" />} 
-          title="Share App" 
-          onClick={() => onNavigate('share')}
-        />
+
+        {/* 5. Help */}
         <ServiceTile 
           icon={<QuestionIcon className="h-8 w-8 text-cyan-400" />} 
           title="Help" 
           onClick={() => onNavigate('help')}
         />
-        <ServiceTile icon={<PlaceholderIcon />} title="Coming Soon" disabled />
-        <ServiceTile icon={<PlaceholderIcon />} title="Coming Soon" disabled />
-        <ServiceTile icon={<PlaceholderIcon />} title="Coming Soon" disabled />
+
+        {/* 6. Share App */}
+        <ServiceTile 
+          icon={<GiftIcon className="h-8 w-8 text-blue-400" />} 
+          title="Share App" 
+          onClick={() => onNavigate('share')}
+        />
       </main>
     </div>
   );

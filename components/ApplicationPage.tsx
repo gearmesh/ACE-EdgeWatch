@@ -6,6 +6,7 @@
  * Each tile links to either an external status page (e.g., DownDetector) or an internal status view.
  *
  * Includes specific handling for products like Salesforce that require regional checks.
+ * 
  */
 
 import React, { useState } from 'react';

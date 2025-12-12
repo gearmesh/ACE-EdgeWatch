@@ -2,7 +2,7 @@
 /**
  * Icon Library
  *
- * A centralized collection of SVG icons used throughout the application.
+ * A centralized collection of boxes used throughout the application.
  * All icons accept an optional `className` prop for Tailwind utility overrides.
  */
 
@@ -296,5 +296,24 @@ export const GiftIcon: React.FC<{className?: string}> = ({className}) => (
 export const QuestionIcon: React.FC<{className?: string}> = ({className}) => (
     <svg xmlns="http://www.w3.org/2000/svg" className={className || "h-8 w-8 text-white"} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M12 17.25h.007v.008H12v-.008z" />
+    </svg>
+);
+
+export const LightningIcon: React.FC<{className?: string}> = ({className}) => (
+    <svg {...iconProps} className={className || iconProps.className} xmlns="http://www.w3.org/2000/svg">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
+    </svg>
+);
+
+export const SearchEyeIcon: React.FC<{className?: string}> = ({className}) => (
+    <svg {...iconProps} className={className || iconProps.className} xmlns="http://www.w3.org/2000/svg">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+        <circle cx="10.5" cy="10.5" r="2.5" fill="currentColor" opacity="0.5" />
+    </svg>
+);
+
+export const TableListIcon: React.FC<{className?: string}> = ({className}) => (
+    <svg {...iconProps} className={className || iconProps.className} xmlns="http://www.w3.org/2000/svg">
+       <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
     </svg>
 );
