@@ -70,21 +70,14 @@ const SmartITPage: React.FC<SmartITPageProps> = ({ onBack, onNavigate }) => {
           onClick={() => window.open('https://aceitsm-or1.onbmc.com/dashboards/d/CmJnGbtVk/ace-incident-table-dashboard?orgId=897459146', '_blank', 'noopener,noreferrer')}
         />
 
-        {/* 4. Incidents Dashboard (Renamed from Incidents) */}
-        <ServiceTile 
-          icon={<CarCrashIcon />} 
-          title="Incidents Dashboard" 
-          onClick={() => window.open('https://aceitsm-or1.onbmc.com/dashboards/d/CmJnGbtVk/ace-incident-table-dashboard?orgId=897459146&from=now-30d&to=now', '_blank', 'noopener,noreferrer')}
-        />
-
-        {/* 5. Help */}
+        {/* 4. Help */}
         <ServiceTile 
           icon={<QuestionIcon className="h-8 w-8 text-cyan-400" />} 
           title="Help" 
           onClick={() => onNavigate('help')}
         />
 
-        {/* 6. Share App */}
+        {/* 5. Share App */}
         <ServiceTile 
           icon={<GiftIcon className="h-8 w-8 text-blue-400" />} 
           title="Share App" 
