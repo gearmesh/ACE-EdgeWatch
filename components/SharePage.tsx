@@ -19,7 +19,7 @@ const SharePage: React.FC<SharePageProps> = ({ onBack }) => {
   const shareSubject = "New ACE EdgeWatch App";
   const shareBodyContent = `Try this during your next Sev 1 or Sev 2 call, This app shows in seconds whether a problem is with providers like Microsoft or AWS, so you stop guessing and start fixing faster.
 No install needed – it runs right in your browser from a simple link.
-https://ace-edge-watch-git-main-ace-edgewatchs-projects.vercel.app`;
+https://ace-edge-watch.vercel.app/`;
 
   const handleEmailShare = () => {
     const subject = encodeURIComponent(shareSubject);
