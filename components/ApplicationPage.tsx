@@ -11,7 +11,7 @@
 
 import React, { useState } from 'react';
 import type { Page } from '../App';
-import { BackArrowIcon, CartIcon, MailIcon, PhoneIcon, KeyIcon, PlaceholderIcon, CloudIcon, MultipleAppsIcon, FamilyIcon, TableauIcon, MuleSoftIcon, CarIcon, OldPhoneIcon } from './icons';
+import { BackArrowIcon, CartIcon, MailIcon, PhoneIcon, KeyIcon, PlaceholderIcon, CloudIcon, MultipleAppsIcon, FamilyIcon, TableauIcon, MuleSoftIcon, CarIcon, OldPhoneIcon, GuidewireIcon } from './icons';
 
 interface ApplicationPageProps {
   onNavigate: (page: Page) => void;
@@ -112,7 +112,13 @@ const ApplicationPage: React.FC<ApplicationPageProps> = ({ onNavigate }) => {
         <h1 className="text-xl font-bold ml-2">ACE App Cloud Service Status</h1>
       </header>
       <main className="grid grid-cols-2 gap-4">
-        {/* New Row with GENESYS */}
+        {/* Guidewire button added */}
+        <ServiceTile 
+            icon={<GuidewireIcon className="h-10 w-10" />} 
+            title="Guidewire" 
+            subtitle="Health Check"
+            onClick={() => onNavigate('guidewire')} 
+        />
         <ServiceTile 
             icon={<OldPhoneIcon className="h-8 w-8 text-cyan-400" />} 
             title="GENESYS" 

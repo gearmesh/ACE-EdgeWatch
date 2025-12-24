@@ -25,6 +25,7 @@ import CloudflareStatusPage from './components/CloudflareStatusPage';
 import SharePage from './components/SharePage';
 import HelpPage from './components/HelpPage';
 import GenesysPage from './components/GenesysPage';
+import GuidewirePage from './components/GuidewirePage';
 
 export type Page = 
   'home' | 
@@ -49,7 +50,8 @@ export type Page =
   'cloudflare-status' |
   'share' |
   'help' |
-  'genesys';
+  'genesys' |
+  'guidewire';
 
 // Exit Confirmation Modal Component
 const ExitConfirmationModal: React.FC<{ isOpen: boolean; onConfirm: () => void; onCancel: () => void }> = ({ isOpen, onConfirm, onCancel }) => {
@@ -219,6 +221,8 @@ const App: React.FC = () => {
         return <HelpPage onBack={() => navigate('smartit')} />;
       case 'genesys':
         return <GenesysPage onBack={() => navigate(previousPage || 'home')} />;
+      case 'guidewire':
+        return <GuidewirePage onBack={() => navigate('application')} />;
       default:
         return <HomePage onNavigate={navigate} />;
     }

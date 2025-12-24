@@ -87,8 +87,9 @@ export const KeyIcon: React.FC = () => (
     </svg>
 );
 
-export const PlaceholderIcon: React.FC = () => (
-    <svg {...iconProps} xmlns="http://www.w3.org/2000/svg">
+// Added className prop support to fix TypeScript error in GuidewirePage.tsx
+export const PlaceholderIcon: React.FC<{className?: string}> = ({className}) => (
+    <svg {...iconProps} className={className || iconProps.className} xmlns="http://www.w3.org/2000/svg">
         <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM12.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM18.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
     </svg>
 );
@@ -220,7 +221,7 @@ export const BigIPIcon: React.FC<{className?: string}> = ({className}) => (
 
 export const BMCHelixIcon: React.FC<{className?: string}> = ({className}) => (
     <svg xmlns="http://www.w3.org/2000/svg" className={className || "h-8 w-8 text-white"} viewBox="0 0 32 32" fill="currentColor">
-        <path d="M12.789 2.133c-6.111 0.011-10.933 5.433-10.1 11.456 0.611 4.5 3.989 8.278 8.444 9.178 0.356 0.078 0.733 0.111 1.1 0.111 5.922-0.011 10.7-5.178 10.333-11.1-0.267-4.144-3.233-7.589-7.278-8.5-0.167-0.033-0.344-0.056-0.511-0.089l-0.011 0.033c0.1 0.022 0.211 0.044 0.311 0.067 3.322 0.744 5.756 3.6 5.989 7.033 0.311 4.8-3.1 9.078-7.856 9.544-4.822 0.489-9.178-2.811-9.833-7.511-0.7-5.022 2.767-9.489 7.744-9.9l0.189-0.011c-1.122-0.656-2.433-1.044-3.8-1.078h-0.011zM19.211 19.867c6.111-0.011 10.933-5.433 10.1-11.456-0.611-4.5-3.989-8.278-8.444-9.178-0.356-0.078-0.733-0.111-1.1-0.111-5.922 0.011-10.7 5.178-10.333 11.1 0.267 4.144 3.233 7.589 7.278 8.5 0.167 0.033 0.344 0.056 0.511 0.089l0.011-0.033c-0.1-0.022-0.211-0.044-0.311-0.067-3.322-0.744-5.756-3.6-5.989-7.033-0.311-4.8 3.1-9.078 7.856-9.544-4.822 0.489-9.178-2.811-9.833-7.511-0.7-5.022 2.767-9.489 7.744-9.9l-0.189 0.011c1.122 0.656 2.433 1.044 3.8 1.078h0.011z"/>
+        <path d="M12.789 2.133c-6.111 0.011-10.933 5.433-10.1 11.456 0.611 4.5 3.989 8.278 8.444 9.178 0.356 0.078 0.733 0.111 1.1 0.111 5.922-0.011 10.7-5.178 10.333-11.1-0.267-4.144-3.233-7.589-7.278-8.5-0.167-0.033-0.344-0.056-0.511-0.089l-0.011 0.033c0.1 0.022 0.211 0.044 0.311 0.067 3.322 0.744 5.756 3.6 5.989 7.033 0.311 4.8-3.1 9.078-7.856 9.544-4.822 0.489-9.178-2.811-9.833-7.511-0.7-5.022 2.767-9.489 7.744-9.9l0.189-0.011c-1.122-0.656-2.433-1.044-3.8-1.078h-0.011zM19.211 19.867c6.111-0.011 10.933-5.433 10.1-11.456-0.611-4.5-3.989-8.278-8.444-9.178-0.356-0.078-0.733-0.111-1.1-0.111-5.922 0.011-10.7 5.178-10.333 11.1 0.267 4.144 3.233 7.589 7.278 8.5 0.167 0.033 0.344 0.056 0.511 0.089l0.011-0.033c-0.1-0.022-0.211-0.044-0.311-0.067-3.322-0.744-5.756-3.6-5.989-7.033-0.311-4.8 3.1-9.078 7.856-9.544-4.822 0.489-9.178-2.811-9.833-7.511-0.7-5.022-2.767-9.489-7.744-9.9l-0.189 0.011c1.122 0.656 2.433 1.044 3.8 1.078h0.011z"/>
     </svg>
 );
 
@@ -320,16 +321,23 @@ export const TableListIcon: React.FC<{className?: string}> = ({className}) => (
 
 export const OldPhoneIcon: React.FC<{className?: string}> = ({className}) => (
     <svg {...iconProps} className={className || iconProps.className} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-        {/* Handset: Classic ear/mouth pieces with curved bar */}
-        <path strokeLinecap="round" strokeLinejoin="round" d="M4 11c0-4 16-4 16 0m-16 0c0 1.5 1 2 2 2h2c1 0 1-0.5 1-2m11 0c0 1.5-1 2-2 2h-2c-1 0-1-0.5-1-2" />
-        {/* Phone Base: Bold 70s trapezoid profile */}
-        <path strokeLinecap="round" strokeLinejoin="round" d="M7 13l-2.5 8h15l-2.5-8H7z" />
-        {/* Rotary Dial Plate */}
-        <circle cx="12" cy="17.5" r="2.2" />
-        {/* Dial Finger Holes (dots) */}
-        <circle cx="12" cy="16.3" r="0.4" fill="currentColor" />
-        <circle cx="13.2" cy="17.5" r="0.4" fill="currentColor" />
-        <circle cx="12" cy="18.7" r="0.4" fill="currentColor" />
-        <circle cx="10.8" cy="17.5" r="0.4" fill="currentColor" />
+        {/* Heavy Plastic Handset with rounded ends */}
+        <path strokeLinecap="round" strokeLinejoin="round" d="M1 9c0-1.5 2-2 11-2s11 0.5 11 2l-2 3.5h-2l-1-2H7l-1 2H4l-2-3.5z" />
+        {/* Trapezoidal Desk Base */}
+        <path strokeLinecap="round" strokeLinejoin="round" d="M5 14l-2 7h18l-2-7H5z" />
+        {/* Large Rotary Dial Center */}
+        <circle cx="12" cy="17.5" r="2.8" />
+        {/* Smaller hole pattern in the dial */}
+        <circle cx="12" cy="15.8" r="0.45" fill="currentColor" stroke="none" />
+        <circle cx="13.7" cy="17.5" r="0.45" fill="currentColor" stroke="none" />
+        <circle cx="12" cy="19.2" r="0.45" fill="currentColor" stroke="none" />
+        <circle cx="10.3" cy="17.5" r="0.45" fill="currentColor" stroke="none" />
+    </svg>
+);
+
+export const GuidewireIcon: React.FC<{className?: string}> = ({className}) => (
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className={className || "h-8 w-8"}>
+        <rect width="24" height="24" rx="4" fill="#00A99D" />
+        <path d="M18 6H6V18H18V12H12V14H16V16H8V8H16V10H18V6Z" fill="white" />
     </svg>
 );
