@@ -320,8 +320,13 @@ export const TableListIcon: React.FC<{className?: string}> = ({className}) => (
 
 export const OldPhoneIcon: React.FC<{className?: string}> = ({className}) => (
     <svg {...iconProps} className={className || iconProps.className} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-        {/* Stylized 70s handset and base */}
-        <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 18.75h-9m9 0a3 3 0 013 3h-15a3 3 0 013-3m9 0v-3.375c0-.621-.504-1.125-1.125-1.125h-4.875c-.621 0-1.125.504-1.125 1.125v3.375m9.375-10.5c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.5c0 .621.504 1.125 1.125 1.125h8.25c.621 0 1.125-.504 1.125-1.125v-3.5z" />
-        <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 5.25v2.25a2.25 2.25 0 002.25 2.25h12a2.25 2.25 0 002.25-2.25V5.25m-16.5 0a2.25 2.25 0 002.25-2.25h12a2.25 2.25 0 002.25 2.25m-16.5 0h16.5" />
+        {/* Handset resting on top */}
+        <path strokeLinecap="round" strokeLinejoin="round" d="M18.3 8.3C19.4 9.1 20 10.3 20 11.5c0 1.5-1 3-3 3H7c-2 0-3-1.5-3-3 0-1.2.6-2.4 1.7-3.2L4 3.5c-.3-1 1-1.5 1.5-.5L7 6h10l1.5-3c.5-1 1.8-.5 1.5.5l-1.7 4.8z" />
+        {/* Slanted Phone Base */}
+        <path strokeLinecap="round" strokeLinejoin="round" d="M6 14.5L4 21h16l-2-6.5" />
+        {/* Rotary Dial Plate */}
+        <circle cx="12" cy="17.5" r="2.5" />
+        {/* Little dial finger stop */}
+        <path d="M14 17h.5" />
     </svg>
 );
