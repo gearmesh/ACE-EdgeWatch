@@ -24,6 +24,7 @@ import RadarStatusPage from './components/RadarStatusPage';
 import CloudflareStatusPage from './components/CloudflareStatusPage';
 import SharePage from './components/SharePage';
 import HelpPage from './components/HelpPage';
+import GenesysPage from './components/GenesysPage';
 
 export type Page = 
   'home' | 
@@ -47,7 +48,8 @@ export type Page =
   'radar-status' |
   'cloudflare-status' |
   'share' |
-  'help';
+  'help' |
+  'genesys';
 
 // Exit Confirmation Modal Component
 const ExitConfirmationModal: React.FC<{ isOpen: boolean; onConfirm: () => void; onCancel: () => void }> = ({ isOpen, onConfirm, onCancel }) => {
@@ -81,6 +83,7 @@ const App: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<Page>('home');
   const [showSplash, setShowSplash] = useState(true);
   const [showExitConfirm, setShowExitConfirm] = useState(false);
+  const [previousPage, setPreviousPage] = useState<Page | null>(null);
 
   // LIFECYCLE: Splash Screen Timer
   useEffect(() => {
@@ -92,89 +95,57 @@ const App: React.FC = () => {
   }, []);
 
   // EFFECT: Handle Speech Synthesis (Welcome Message)
-  // This effect runs once the splash screen is dismissed. It attempts to find a
-  // British female voice to announce the welcome message.
   useEffect(() => {
     if (!showSplash) {
       const speak = () => {
-        // Ensure this runs only in the browser and speech synthesis is supported
         if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
-          // Stop any previous utterances to prevent queuing on re-renders
           window.speechSynthesis.cancel();
-          
           const welcomeMessage = new SpeechSynthesisUtterance("Welcome to ACE Edge Watch.");
-
           const voices = window.speechSynthesis.getVoices();
-          
-          // Heuristic to find a British female voice. Voice names and availability vary widely across browsers/OS.
           let selectedVoice = voices.find(voice => 
             voice.lang === 'en-GB' && 
             (voice.name.includes('Female') || voice.name.toLowerCase().includes('susan') || voice.name.toLowerCase().includes('hazel') || voice.name.toLowerCase().includes('kate'))
           );
-          
-          // Fallback: Find any British voice if a specifically female one isn't found
           if (!selectedVoice) {
             selectedVoice = voices.find(voice => voice.lang === 'en-GB');
           }
-
-          // Fallback: Find any other English-speaking female voice
           if (!selectedVoice) {
             selectedVoice = voices.find(voice => 
               voice.lang.startsWith('en') && 
               (voice.name.includes('Female') || voice.name.includes('Zira') || voice.name.includes('Samantha'))
             );
           }
-
           if (selectedVoice) {
             welcomeMessage.voice = selectedVoice;
           }
-
           window.speechSynthesis.speak(welcomeMessage);
-        } else {
-          console.warn('Speech Synthesis not supported in this browser.');
         }
       };
 
       if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
         const synth = window.speechSynthesis;
-        // Voices list is loaded asynchronously in some browsers (e.g. Chrome)
         if (synth.getVoices().length === 0) {
           synth.addEventListener('voiceschanged', speak);
         } else {
           speak();
         }
-
         return () => {
           synth.removeEventListener('voiceschanged', speak);
-          synth.cancel(); // Stop speaking on component unmount
+          synth.cancel();
         };
       }
     }
   }, [showSplash]);
 
   // EFFECT: Intercept Swipe-to-Close / Back Button on Home Page
-  // We manipulate the History API to create a "trap" state. If the user hits back/swipes back
-  // while on the home page, we catch the event and show a modal instead of leaving the page.
   useEffect(() => {
-    // Only trap back navigation on Home and when splash is gone
     if (currentPage === 'home' && !showSplash) {
-        // Push a dummy state to the history stack. 
-        // This ensures there is a "forward" state we are currently in, so "Back" goes to the previous one (which triggers popstate).
         window.history.pushState({ page: 'home' }, '', window.location.href);
-
         const handlePopState = (event: PopStateEvent) => {
-            // User pressed back or swiped back.
-            // Since we pushed a state, this event means we popped that state.
-            // We want to stop the user from leaving, so we show the modal.
-            
-            // Prevent default isn't strictly needed for popstate as the navigation already happened,
-            // but we stop propagation to be safe.
             event.preventDefault();
             setShowExitConfirm(true);
         };
-
         window.addEventListener('popstate', handlePopState);
-
         return () => {
             window.removeEventListener('popstate', handlePopState);
         };
@@ -183,27 +154,22 @@ const App: React.FC = () => {
 
   const handleExitConfirm = () => {
     setShowExitConfirm(false);
-    // User confirmed exit.
-    // We are currently in the state *before* the one we pushed (because popstate fired).
-    // To truly exit, we trigger another back action.
     try {
         window.history.back();
     } catch (e) {
-        // Fallback if history is empty (unlikely if we pushed)
         window.close();
     }
   };
 
   const handleExitCancel = () => {
     setShowExitConfirm(false);
-    // User wants to stay.
-    // Re-push the state to re-arm the trap for the next swipe.
     window.history.pushState({ page: 'home' }, '', window.location.href);
   };
 
   const navigate = useCallback((page: Page) => {
+    setPreviousPage(currentPage);
     setCurrentPage(page);
-  }, []);
+  }, [currentPage]);
 
   const renderPage = () => {
     switch (currentPage) {
@@ -251,6 +217,8 @@ const App: React.FC = () => {
         return <SharePage onBack={() => navigate('smartit')} />;
       case 'help':
         return <HelpPage onBack={() => navigate('smartit')} />;
+      case 'genesys':
+        return <GenesysPage onBack={() => navigate(previousPage || 'home')} />;
       default:
         return <HomePage onNavigate={navigate} />;
     }

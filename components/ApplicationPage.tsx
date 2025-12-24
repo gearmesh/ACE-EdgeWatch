@@ -11,7 +11,7 @@
 
 import React, { useState } from 'react';
 import type { Page } from '../App';
-import { BackArrowIcon, CartIcon, MailIcon, PhoneIcon, KeyIcon, PlaceholderIcon, CloudIcon, MultipleAppsIcon, FamilyIcon, TableauIcon, MuleSoftIcon, CarIcon } from './icons';
+import { BackArrowIcon, CartIcon, MailIcon, PhoneIcon, KeyIcon, PlaceholderIcon, CloudIcon, MultipleAppsIcon, FamilyIcon, TableauIcon, MuleSoftIcon, CarIcon, OldPhoneIcon } from './icons';
 
 interface ApplicationPageProps {
   onNavigate: (page: Page) => void;
@@ -50,7 +50,7 @@ const MessageBox: React.FC<{ isOpen: boolean; message: string; onConfirm: () => 
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4">
+    <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4">
       <div className="bg-slate-800 border border-slate-600 rounded-lg shadow-2xl max-w-sm w-full p-6 text-center">
         <p className="text-white text-lg mb-6 leading-relaxed">{message}</p>
         <button
@@ -112,57 +112,65 @@ const ApplicationPage: React.FC<ApplicationPageProps> = ({ onNavigate }) => {
         <h1 className="text-xl font-bold ml-2">ACE App Cloud Service Status</h1>
       </header>
       <main className="grid grid-cols-2 gap-4">
-        {/* Row 1 */}
+        {/* New Row with GENESYS */}
+        <ServiceTile 
+            icon={<OldPhoneIcon className="h-8 w-8 text-cyan-400" />} 
+            title="GENESYS" 
+            subtitle="Health Check"
+            onClick={() => onNavigate('genesys')} 
+        />
         <ServiceTile 
             icon={<CartIcon />} 
             title="E-Commerce" 
             subtitle="AWS"
             onClick={() => window.open('https://downdetector.com/status/aws-amazon-web-services/', '_blank', 'noopener,noreferrer')} 
         />
+        
+        {/* Next Row */}
         <ServiceTile 
           icon={<FamilyIcon />} 
           title="RADAR & Member Validation" 
           subtitle="Bing & Google Maps"
           onClick={handleRadarClick} 
         />
-        
-        {/* Row 2 */}
         <ServiceTile 
             icon={<TableauIcon />} 
             title="Tableau" 
             onClick={() => handleSalesforceProductClick('Tableau', 'https://status.salesforce.com/products/Tableau')} 
         />
+
+        {/* Next Row */}
         <ServiceTile 
             icon={<MuleSoftIcon />} 
             title="MuleSoft" 
             onClick={() => handleSalesforceProductClick('MuleSoft', 'https://status.salesforce.com/products/Mulesoft')} 
         />
-
-        {/* Row 3 */}
         <ServiceTile 
           icon={<KeyIcon />} 
           title="SSO" 
           subtitle="per Azure Downdetector" 
           onClick={() => window.open('https://downdetector.com/status/windows-azure/', '_blank', 'noopener,noreferrer')} 
         />
+
+        {/* Next Row */}
         <ServiceTile 
           icon={<CloudIcon />} 
           title="Azure Health" 
           subtitle="per Microsoft" 
           onClick={() => window.open('https://portal.azure.com/#view/Microsoft_Azure_Health/AzureHealthBrowseBlade/~/serviceIssues', '_blank', 'noopener,noreferrer')} 
         />
-        
-        {/* Row 4 */}
         <ServiceTile icon={<PhoneIcon />} title="Intune" onClick={() => window.open('https://statusgator.com/services/microsoft-intune', '_blank', 'noopener,noreferrer')} />
-        <ServiceTile icon={<MailIcon />} title="Outlook" onClick={() => window.open('https://downdetector.com/status/outlook/', '_blank', 'noopener,noreferrer')} />
         
-        {/* Row 5 */}
+        {/* Next Row */}
+        <ServiceTile icon={<MailIcon />} title="Outlook" onClick={() => window.open('https://downdetector.com/status/outlook/', '_blank', 'noopener,noreferrer')} />
         <ServiceTile 
           icon={<MultipleAppsIcon />} 
           title="Claims Pay, TLO, N2uitive & ISO" 
           subtitle="Cloudflare"
           onClick={() => onNavigate('cloudflare-status')} 
         />
+        
+        {/* Next Row */}
         <ServiceTile 
             icon={<CarIcon />} 
             title="CA DMV" 
