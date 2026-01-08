@@ -56,7 +56,7 @@ const HelpPage: React.FC<HelpPageProps> = ({ onBack }) => {
             className="group relative w-full flex items-center justify-center gap-3 p-4 rounded-xl bg-cyan-600 hover:bg-cyan-500 transition-all duration-300 shadow-lg shadow-cyan-500/20 active:scale-[0.98] mt-auto mb-8"
         >
             <MailIcon />
-            <span className="font-bold text-lg">Contact</span>
+            <span className="font-bold text-lg">Contact & Feedback</span>
         </button>
       </main>
     </div>
