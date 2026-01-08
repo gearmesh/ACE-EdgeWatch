@@ -105,7 +105,7 @@ const GenesysPage: React.FC<GenesysPageProps> = ({ onBack }) => {
     id: 'current-health',
     title: 'Current Health Status',
     // Changed comma to semicolon after 'displayed' for better grammar
-    message: 'All regions are displayed; focus on the Americas (US West) and (US East) columns\nPrevious incidents by day are displayed near the bottom',
+    message: 'All regions are displayed; focus on the Americas (US West) and (US East) columns. Previous incidents by day are displayed near the bottom',
     url: 'https://status.mypurecloud.com',
     icon: <LightningIcon className="h-10 w-10 text-cyan-400" />,
     shouldScale: true

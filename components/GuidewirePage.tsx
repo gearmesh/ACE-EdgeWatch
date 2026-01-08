@@ -50,7 +50,7 @@ const GuidewirePage: React.FC<GuidewirePageProps> = ({ onBack }) => {
     },
     {
       id: 'maintenance',
-      title: 'Scheduled Maintenance',
+      title: 'Scheduled Maintenance (Past & Future)',
       message: 'The Scheduled Maintenance page lists all the previous maintenance. This may help identify a cross linked issue if Guidewire is having issues.',
       url: 'https://status.guidewire.com/?nav=maintenance',
       icon: <ComputerIcon className="h-10 w-10 text-indigo-400" />
@@ -64,7 +64,7 @@ const GuidewirePage: React.FC<GuidewirePageProps> = ({ onBack }) => {
     },
     {
       id: 'historical',
-      title: 'Historical Status',
+      title: 'Historical Status of Incidents',
       message: 'Historical Status is great way to see if any maintenance was done the day before',
       url: 'https://status.guidewire.com/history?page=1&nav=historical-status',
       icon: <TableListIcon className="h-10 w-10 text-slate-400" />
