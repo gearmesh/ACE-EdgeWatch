@@ -101,38 +101,42 @@ const GenesysPage: React.FC<GenesysPageProps> = ({ onBack }) => {
   const [viewerUrl, setViewerUrl] = useState<string | null>(null);
 
   const tiles: TileData[] = [
-    {
-      id: 'current-health',
-      title: 'Current Health Status',
-      message: 'All regions are displayed, focus on the Americas (US West) and (US East) columns\nPrevious Incidents by day are displayed near the bottom',
-      url: 'https://status.mypurecloud.com',
-      icon: <LightningIcon className="h-10 w-10 text-cyan-400" />,
-      shouldScale: true
-    },
-    {
-      id: 'past-incidents',
-      title: 'Past Incidents',
-      message: 'Scroll past the table to view Incident History which lists current and past Incidents',
-      url: 'https://status.mypurecloud.com/history',
-      icon: <TableListIcon className="h-10 w-10 text-slate-300" />,
-      shouldScale: true
-    },
-    {
-      id: 'us-west',
-      title: 'US West (StatusGator)',
-      message: 'StatusGator is like DownDetector – it captures customer complaints of outages. Outages are often identified here before GENESYS health site is updated. Be sure to check the US East site as well',
-      url: 'https://statusgator.com/services/genesys-cloud/americas-us-west',
-      icon: <MapLocationIcon className="h-10 w-10 text-orange-400" />,
-      shouldScale: false
-    },
-    {
-      id: 'us-east',
-      title: 'US East (StatusGator)',
-      message: 'StatusGator is like DownDetector – it captures customer complaints of outages. Outages are often identified here before GENESYS health site is updated. Be sure to check the US West site as well',
-      url: 'https://statusgator.com/services/genesys-cloud/americas-us-east',
-      icon: <MapLocationIcon className="h-10 w-10 text-cyan-400" />,
-      shouldScale: false
-    }
+{
+    id: 'current-health',
+    title: 'Current Health Status',
+    // Changed comma to semicolon after 'displayed' for better grammar
+    message: 'All regions are displayed; focus on the Americas (US West) and (US East) columns\nPrevious incidents by day are displayed near the bottom',
+    url: 'https://status.mypurecloud.com',
+    icon: <LightningIcon className="h-10 w-10 text-cyan-400" />,
+    shouldScale: true
+  },
+  {
+    id: 'past-incidents',
+    // Fixed /n (text) to \n (newline code)
+    title: 'Platform Availability\nIncident History (Detailed)',
+    message: 'Scroll past the table to view Incident History which lists current and detailed past incidents',
+    url: 'https://status.mypurecloud.com/history',
+    icon: <TableListIcon className="h-10 w-10 text-slate-300" />,
+    shouldScale: true
+  },
+  {
+    id: 'us-west',
+    title: 'US West (StatusGator)',
+    // Changed GENESYS to Genesys
+    message: 'StatusGator is like DownDetector – it captures customer complaints of outages. Outages are often identified here before Genesys health site is updated. Be sure to check the US East site as well',
+    url: 'https://statusgator.com/services/genesys-cloud/americas-us-west',
+    icon: <MapLocationIcon className="h-10 w-10 text-orange-400" />,
+    shouldScale: false
+  },
+  {
+    id: 'us-east',
+    title: 'US East (StatusGator)',
+    // Changed GENESYS to Genesys
+    message: 'StatusGator is like DownDetector – it captures customer complaints of outages. Outages are often identified here before Genesys health site is updated. Be sure to check the US West site as well',
+    url: 'https://statusgator.com/services/genesys-cloud/americas-us-east',
+    icon: <MapLocationIcon className="h-10 w-10 text-cyan-400" />,
+    shouldScale: false
+  }
   ];
 
   const handleTileClick = (tile: TileData) => {
