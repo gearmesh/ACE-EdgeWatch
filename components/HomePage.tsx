@@ -187,7 +187,7 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
             <main className="flex-grow w-full space-y-4">
                 <NavButton
                    icon={<UserIcon />}
-                   title="By Application"
+                   title="EdgeWatch By Application"
                    description="Status for key enterprise applications"
                    accentColor="cyan"
                    onClick={() => handleButtonClick('application')}
@@ -195,7 +195,7 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
                 
                 <NavButton
                    icon={<CloudIcon />}
-                   title="By Cloud Provider"
+                   title="EdgeWatch By Cloud Provider"
                    description="AWS, Azure & Google Cloud health"
                    accentColor="indigo"
                    onClick={() => handleButtonClick('cloudprovider')}
@@ -203,7 +203,7 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
 
                 <NavButton
                    icon={<BMCHelixIcon />}
-                   title="ACE Smart IT"
+                   title="ACE SmartIT & Help"
                    description="Incidents, changes & dashboard metrics"
                    accentColor="orange"
                    onClick={() => handleButtonClick('smartit')}
