@@ -70,10 +70,10 @@ const SmartITPage: React.FC<SmartITPageProps> = ({ onBack, onNavigate }) => {
           onClick={() => window.open('https://aceitsm-or1.onbmc.com/dashboards/d/CmJnGbtVk/ace-incident-table-dashboard?orgId=897459146', '_blank', 'noopener,noreferrer')}
         />
 
-        {/* 4. Help */}
+        {/* 4. Help & Feedback */}
         <ServiceTile 
           icon={<QuestionIcon className="h-8 w-8 text-cyan-400" />} 
-          title="Help" 
+          title="Help & Feedback" 
           onClick={() => onNavigate('help')}
         />
 

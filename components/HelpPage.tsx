@@ -31,7 +31,7 @@ const HelpPage: React.FC<HelpPageProps> = ({ onBack }) => {
             <button onClick={onBack} className="p-2 -ml-2 hover:bg-white/10 rounded-full transition-colors">
             <BackArrowIcon />
             </button>
-            <h1 className="text-xl font-bold ml-2 tracking-wide">Help</h1>
+            <h1 className="text-xl font-bold ml-2 tracking-wide">Help & Feedback</h1>
         </div>
         <p className="ml-12 text-sm text-cyan-400 font-mono font-bold mt-1">{__APP_VERSION__}</p>
       </header>
