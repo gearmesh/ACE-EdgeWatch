@@ -82,16 +82,16 @@ const AboutPage: React.FC<AboutPageProps> = ({ onBack }) => {
               Engineering Team
             </h2>
             <p className="mb-4">
-              This application is proudly maintained by the EUC Enterprise Engineering group. Our team is dedicated to building small robust, low-latency tools that support the enterprise.
+              Brought to you by Greg Messemer and Mauricio Romero of the EUC Enterprise Engineering group, this tool is the result of an ambitious end-of-year goal. As engineers primarily focused on Endpoint User and Converged Engineering, stepping into mobile application programming was a significant learning curve. While the result may not be perfect, it reflects our dedication to growth and our commitment to creating robust solutions for the enterprise.
             </p>
             <div className="flex gap-4">
               <div className="flex-1 bg-emerald-500/5 p-3 rounded-lg border border-emerald-500/20 text-center">
                 <span className="block font-bold text-white">Greg Messemer</span>
-                <span className="text-[10px] text-emerald-400/80 font-mono uppercase">Lead Engineer</span>
+                <span className="text-[10px] text-emerald-400/80 font-mono uppercase">DevOps Engineer</span>
               </div>
               <div className="flex-1 bg-emerald-500/5 p-3 rounded-lg border border-emerald-500/20 text-center">
                 <span className="block font-bold text-white">Mauricio Romero</span>
-                <span className="text-[10px] text-emerald-400/80 font-mono uppercase">System Architect</span>
+                <span className="text-[10px] text-emerald-400/80 font-mono uppercase">DevOps Senior</span>
               </div>
             </div>
           </section>
