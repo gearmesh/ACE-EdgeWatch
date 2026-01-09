@@ -26,6 +26,8 @@ import SharePage from './components/SharePage';
 import HelpPage from './components/HelpPage';
 import GenesysPage from './components/GenesysPage';
 import GuidewirePage from './components/GuidewirePage';
+import BingMapsPage from './components/BingMapsPage';
+import GoogleMapsPage from './components/GoogleMapsPage';
 
 export type Page = 
   'home' | 
@@ -190,9 +192,9 @@ const App: React.FC = () => {
       case 'cloudprovider':
         return <CloudProviderPage onNavigate={navigate} />;
       case 'bing':
-        return <ServicePage serviceName="Bing Maps" onBack={() => navigate('cloudprovider')} />;
+        return <BingMapsPage onBack={() => navigate('cloudprovider')} />;
       case 'googlemaps':
-        return <ServicePage serviceName="Google Maps" onBack={() => navigate('cloudprovider')} />;
+        return <GoogleMapsPage onBack={() => navigate('cloudprovider')} />;
       case 'azure':
         return <ServicePage serviceName="Azure" onBack={() => navigate('cloudprovider')} />;
       case 'aws':

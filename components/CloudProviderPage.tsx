@@ -87,8 +87,8 @@ const CloudProviderPage: React.FC<CloudProviderPageProps> = ({ onNavigate }) => 
         {/* GENESYS as the 1st icon */}
         <ServiceTile icon={<OldPhoneIcon className="h-8 w-8 text-cyan-400" />} title="GENESYS" onClick={() => onNavigate('genesys')} />
         
-        <ServiceTile icon={<MapLocationIcon />} title="Bing Maps" onClick={() => window.open('https://www.isitdownrightnow.com/maps.bing.com.html', '_blank', 'noopener,noreferrer')} />
-        <ServiceTile icon={<MapLocationIcon />} title="Google Maps" onClick={() => window.open('https://downdetector.com/status/google-maps/', '_blank', 'noopener,noreferrer')} />
+        <ServiceTile icon={<MapLocationIcon />} title="Bing Maps" onClick={() => onNavigate('bing')} />
+        <ServiceTile icon={<MapLocationIcon />} title="Google Maps" onClick={() => onNavigate('googlemaps')} />
         <ServiceTile icon={<CloudIcon />} title="Azure" onClick={() => window.open('https://downdetector.com/status/windows-azure/', '_blank', 'noopener,noreferrer')} />
         <ServiceTile icon={<ServerIcon />} title="AWS" onClick={() => window.open('https://downdetector.com/status/aws-amazon-web-services/', '_blank', 'noopener,noreferrer')} />
         <ServiceTile icon={<BuildingIcon />} title="Microsoft 365" onClick={() => window.open('https://downdetector.com/status/microsoft-365/', '_blank', 'noopener,noreferrer')} />
