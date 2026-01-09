@@ -31,11 +31,9 @@ const AboutPage: React.FC<AboutPageProps> = ({ onBack }) => {
               The Mission
             </h2>
             <p className="mb-4">
-              ACE EdgeWatch is a high-performance incident response utility designed to eliminate the "fog of war" during major enterprise service disruptions. In a modern distributed environment, identifying whether a failure is internal (Project-based) or external (Cloud-based) is the most critical first step in mitigation.
+             ACE EdgeWatch is a high-performance incident response app designed to eliminate the "fog of war" during major enterprise service disruptions. In a modern distributed environment, identifying whether a failure is internal applicatio or external Cloud-based dependency, can be a critical first step in mitigation.
             </p>
-            <p>
-              EdgeWatch provides an immediate "ground truth" by bypassing traditional cached status pages and performing real-time health checks directly from the user's perspective.
-            </p>
+            
           </section>
 
           <section>
@@ -44,10 +42,10 @@ const AboutPage: React.FC<AboutPageProps> = ({ onBack }) => {
               Why It Exists
              </h2>
              <p className="mb-4">
-               During critical Sev 1 and Sev 2 incident calls, every second counts. Traditional vendor status pages are often delayed by 15–30 minutes as manual verification and public relations approvals take place.
+               During critical Sev 1 and Sev 2 incident calls, every second counts.
              </p>
              <p>
-               EdgeWatch was built by the EUC Enterprise Engineering team to give our engineers a 15-minute "head start." By monitoring the heartbeat of AWS, Azure, Salesforce, Bing Maps, and Google Maps simultaneously, we can pivot from troubleshooting code to engaging vendor support in seconds, not hours.
+               EdgeWatch was built by the EUC Enterprise Engineering team to give engineers a "head start." By quickly able to test the health of AWS, Azure, Salesforce, Bing Maps, and other cloud providers, we can pivot from troubleshooting unknowns to engaging vendor support in seconds, not hours.
              </p>
           </section>
 
@@ -60,13 +58,13 @@ const AboutPage: React.FC<AboutPageProps> = ({ onBack }) => {
               <div className="bg-slate-900/40 p-3 rounded-lg border border-white/5">
                 <h4 className="font-bold text-emerald-300 text-xs uppercase mb-1">1. Smart Scraping</h4>
                 <p className="text-xs">
-                  We utilize decentralized CORS proxies to scrape live data from DownDetector and official status endpoints, filtering through the noise to find region-specific impact reports for North America.
+                  We scrape live data from DownDetector and official status endpoints, filtering through the noise to find region-specific impact reports for North America.
                 </p>
               </div>
               <div className="bg-slate-900/40 p-3 rounded-lg border border-white/5">
                 <h4 className="font-bold text-emerald-300 text-xs uppercase mb-1">2. Functional Pinging</h4>
                 <p className="text-xs">
-                  For critical map and gateway services, we perform "Functional Pings." By attempting to load raw assets (like map tiles or login descriptors) directly from the provider's CDN, we verify reachability even when public status pages claim everything is fine.
+                  For critical map and gateway services, we attempt to load raw assets (like map tiles or login descriptors) directly from the provider's CDN.
                 </p>
               </div>
               <div className="bg-slate-900/40 p-3 rounded-lg border border-white/5">
@@ -84,7 +82,7 @@ const AboutPage: React.FC<AboutPageProps> = ({ onBack }) => {
               Engineering Team
             </h2>
             <p className="mb-4">
-              This application is proudly maintained by the EUC Enterprise Engineering group. Our team is dedicated to building robust, low-latency tools that support our enterprise's digital resilience.
+              This application is proudly maintained by the EUC Enterprise Engineering group. Our team is dedicated to building small robust, low-latency tools that support the enterprise.
             </p>
             <div className="flex gap-4">
               <div className="flex-1 bg-emerald-500/5 p-3 rounded-lg border border-emerald-500/20 text-center">
