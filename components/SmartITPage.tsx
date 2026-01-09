@@ -8,7 +8,7 @@
 
 import React from 'react';
 import type { Page } from '../App';
-import { BackArrowIcon, PlaceholderIcon, CarCrashIcon, GiftIcon, QuestionIcon, LightningIcon, SearchEyeIcon, TableListIcon } from './icons';
+import { BackArrowIcon, PlaceholderIcon, CarCrashIcon, GiftIcon, QuestionIcon, LightningIcon, SearchEyeIcon, TableListIcon, EyeIcon } from './icons';
 
 interface SmartITPageProps {
   onBack: () => void;
@@ -82,6 +82,13 @@ const SmartITPage: React.FC<SmartITPageProps> = ({ onBack, onNavigate }) => {
           icon={<GiftIcon className="h-8 w-8 text-blue-400" />} 
           title="Share App" 
           onClick={() => onNavigate('share')}
+        />
+
+        {/* 6. About EdgeWatch */}
+        <ServiceTile 
+          icon={<EyeIcon className="h-8 w-8 text-emerald-400" />} 
+          title="About EdgeWatch" 
+          onClick={() => onNavigate('about')}
         />
       </main>
     </div>

@@ -28,6 +28,7 @@ import GenesysPage from './components/GenesysPage';
 import GuidewirePage from './components/GuidewirePage';
 import BingMapsPage from './components/BingMapsPage';
 import GoogleMapsPage from './components/GoogleMapsPage';
+import AboutPage from './components/AboutPage';
 
 export type Page = 
   'home' | 
@@ -52,6 +53,7 @@ export type Page =
   'cloudflare-status' |
   'share' |
   'help' |
+  'about' |
   'genesys' |
   'guidewire';
 
@@ -221,6 +223,8 @@ const App: React.FC = () => {
         return <SharePage onBack={() => navigate('smartit')} />;
       case 'help':
         return <HelpPage onBack={() => navigate('smartit')} />;
+      case 'about':
+        return <AboutPage onBack={() => navigate('smartit')} />;
       case 'genesys':
         return <GenesysPage onBack={() => navigate(previousPage || 'home')} />;
       case 'guidewire':
