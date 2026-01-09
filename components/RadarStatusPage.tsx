@@ -133,7 +133,7 @@ const RadarStatusPage: React.FC<RadarStatusPageProps> = ({ onBack }) => {
       }
     };
 
-    const checkGoogle = async () => {
+    const checkGoogleMaps = async () => {
       let status: Status = 'unknown';
       let debugMsg = '';
 
@@ -187,7 +187,7 @@ const RadarStatusPage: React.FC<RadarStatusPageProps> = ({ onBack }) => {
     };
 
     checkBing();
-    checkGoogle();
+    checkGoogleMaps();
   }, []);
 
   const getStatusConfig = (status: Status) => {
