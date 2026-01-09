@@ -1,10 +1,12 @@
 
-import React, { useState } from 'react';
-import { BackArrowIcon, MapLocationIcon, SearchEyeIcon } from './icons';
+import React, { useState, useEffect } from 'react';
+import { BackArrowIcon, MapLocationIcon, SearchEyeIcon, LightningIcon } from './icons';
 
 interface GoogleMapsPageProps {
   onBack: () => void;
 }
+
+type Status = 'healthy' | 'warning' | 'critical' | 'unreachable' | 'loading' | 'unknown';
 
 const MessageBox: React.FC<{ isOpen: boolean; message: string; onConfirm: () => void }> = ({ isOpen, message, onConfirm }) => {
   if (!isOpen) return null;
@@ -25,15 +27,123 @@ const MessageBox: React.FC<{ isOpen: boolean; message: string; onConfirm: () => 
 };
 
 const GoogleMapsPage: React.FC<GoogleMapsPageProps> = ({ onBack }) => {
+  const [status, setStatus] = useState<Status>('loading');
+  const [debugInfo, setDebugInfo] = useState<string>('');
   const [popup, setPopup] = useState<{ isOpen: boolean; url: string }>({
     isOpen: false,
     url: ''
   });
 
-  const handleTileClick = (url: string) => {
+  const checkGoogleMaps = async () => {
+    let currentStatus: Status = 'unknown';
+    let debugMsg = '';
+
+    const testDirectConnection = (testImageUrl: string): Promise<boolean> => {
+      return new Promise((resolve) => {
+        const img = new Image();
+        img.onload = () => resolve(true);
+        img.onerror = () => resolve(false);
+        img.src = `${testImageUrl}&_t=${new Date().getTime()}`;
+      });
+    };
+
+    const fetchWithFallback = async (targetUrl: string, proxies: string[]): Promise<string> => {
+      let lastError;
+      for (const proxyBase of proxies) {
+        try {
+          let fullUrl = `${proxyBase}${encodeURIComponent(targetUrl)}`;
+          if (proxyBase.includes('corsproxy.io')) {
+             fullUrl = `${proxyBase}?${encodeURIComponent(targetUrl)}`;
+          }
+
+          const response = await fetch(fullUrl);
+          if (!response.ok) throw new Error(`HTTP ${response.status} from ${proxyBase}`);
+          
+          const text = await response.text();
+          if (!text) throw new Error(`Empty response from ${proxyBase}`);
+          return text;
+        } catch (e) {
+          console.warn(`Proxy ${proxyBase} failed:`, e);
+          lastError = e;
+        }
+      }
+      throw lastError || new Error("All proxies failed");
+    };
+
+    try {
+      setStatus('loading');
+      
+      // 1. Try Scraping First (DownDetector)
+      try {
+          const targetUrl = 'https://downdetector.com/status/google-maps/';
+          const htmlText = await fetchWithFallback(targetUrl, [
+               'https://corsproxy.io/'
+          ]);
+          
+          const lowerHtml = htmlText.toLowerCase();
+          debugMsg = htmlText.substring(0, 300);
+
+          if (lowerHtml.includes('user reports indicate no current problems')) {
+              currentStatus = 'healthy';
+          } else if (lowerHtml.includes('user reports indicate possible problems')) {
+              currentStatus = 'warning';
+          } else if (lowerHtml.includes('user reports indicate problems')) {
+              currentStatus = 'critical';
+          }
+      } catch (scrapeError: any) {
+          debugMsg = `Scrape failed: ${scrapeError.message}`;
+      }
+
+      // 2. Fallback: Direct Connection Test (Tile Ping)
+      if (currentStatus === 'unknown') {
+           debugMsg += " | Attempting Direct Ping...";
+           const isReachable = await testDirectConnection('https://mt0.google.com/vt/lyrs=m&hl=en&x=0&y=0&z=0');
+           
+           if (isReachable) {
+               currentStatus = 'healthy';
+               debugMsg += " | Direct Ping: SUCCESS";
+           } else {
+               currentStatus = 'unreachable';
+               debugMsg += " | Direct Ping: FAILED";
+           }
+      }
+      
+      setStatus(currentStatus);
+      setDebugInfo(debugMsg);
+
+    } catch (error: any) {
+      console.error('Google Check Error:', error);
+      setStatus('unreachable');
+      setDebugInfo(`Critical Failure: ${error.message}`);
+    }
+  };
+
+  useEffect(() => {
+    checkGoogleMaps();
+  }, []);
+
+  const getStatusConfig = (s: Status) => {
+    switch (s) {
+      case 'healthy':
+        return { color: 'bg-green-600 hover:bg-green-700 shadow-green-500/20', text: 'Healthy' };
+      case 'warning':
+        return { color: 'bg-yellow-500 hover:bg-yellow-600 shadow-yellow-500/20', text: 'Warning' };
+      case 'critical':
+      case 'unreachable':
+        return { color: 'bg-red-600 hover:bg-red-700 shadow-red-500/20', text: 'Service Down' };
+      case 'loading':
+        return { color: 'bg-slate-700 hover:bg-slate-800', text: 'Checking...' };
+      default:
+        return { color: 'bg-slate-600 hover:bg-slate-700', text: 'Unknown' };
+    }
+  };
+
+  const currentConfig = getStatusConfig(status);
+
+  const handleDetailsClick = () => {
     setPopup({
       isOpen: true,
-      url: url
+      url: 'https://downdetector.com/status/google-maps/'
     });
   };
 
@@ -58,33 +168,63 @@ const GoogleMapsPage: React.FC<GoogleMapsPageProps> = ({ onBack }) => {
         <h1 className="text-xl font-bold ml-2">Google Maps Health</h1>
       </header>
 
-      <main className="flex-grow flex flex-col items-center">
-        <div className="mt-8 mb-12">
-            <div className="bg-green-500/20 p-8 rounded-full ring-4 ring-green-500/30">
-                <MapLocationIcon className="w-24 h-24 text-green-400" />
-            </div>
-        </div>
-        
-        <div className="w-full max-w-xs space-y-6">
-          <button
-            onClick={() => handleTileClick('https://downdetector.com/status/google-maps/')}
-            className="w-full flex flex-col items-center gap-3 bg-slate-800 border border-slate-700 hover:border-green-500 p-6 rounded-2xl shadow-xl transition-all transform hover:scale-[1.03] group"
-          >
-            <SearchEyeIcon className="h-10 w-10 text-green-400 group-hover:scale-110 transition-transform" />
-            <div className="text-center">
-                <h3 className="font-bold text-lg">DownDetector</h3>
-                <p className="text-xs text-slate-400 mt-1">User Reported Outages</p>
-            </div>
-          </button>
-        </div>
-
-        <div className="mt-12 px-6 text-center text-sm text-slate-400 max-w-sm leading-relaxed">
-          <p className="mb-4">
-            Google Maps API is utilized for advanced spatial analytics and external member-facing mapping features.
+      <main className="flex-grow flex flex-col gap-6">
+        {/* Large Status Card (Half Screen Size) */}
+        <button
+          onClick={checkGoogleMaps}
+          className={`w-full min-h-[40vh] rounded-3xl shadow-2xl flex flex-col items-center justify-center p-10 transition-all transform active:scale-[0.98] ring-1 ring-white/10 ${currentConfig.color} ${status === 'loading' ? 'animate-pulse' : ''}`}
+        >
+          <div className="bg-white/20 p-6 rounded-full mb-6">
+             <MapLocationIcon className="h-20 w-20 text-white" />
+          </div>
+          <h2 className="text-4xl font-black text-white mb-2 tracking-tight">GOOGLE MAPS</h2>
+          <span className="text-3xl font-bold text-white uppercase tracking-widest drop-shadow-md">
+            {currentConfig.text}
+          </span>
+          <p className="text-sm font-medium text-white/70 mt-4 flex items-center gap-2">
+            <LightningIcon className="h-4 w-4" />
+            Tap to Refresh
           </p>
-          <div className="p-3 bg-green-500/10 rounded-lg border border-green-500/20">
-            <p className="text-green-300 font-semibold">Note:</p>
-            <p className="text-xs">Outages reported on DownDetector often precede official acknowledgement from the provider.</p>
+        </button>
+
+        {/* View Details Button */}
+        <button
+          onClick={handleDetailsClick}
+          className="w-full bg-slate-800 border border-slate-700 p-6 rounded-2xl flex items-center justify-between hover:bg-slate-750 transition-colors shadow-lg active:scale-[0.99]"
+        >
+          <div className="flex items-center gap-4">
+            <div className="p-3 bg-green-500/10 rounded-xl text-green-400">
+               <SearchEyeIcon className="h-6 w-6" />
+            </div>
+            <div className="text-left">
+                <h3 className="font-bold text-lg">DownDetector Details</h3>
+                <p className="text-xs text-slate-400 leading-tight">View community outage reports</p>
+            </div>
+          </div>
+          <div className="text-slate-500">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </div>
+        </button>
+
+        {/* Trace log for failures */}
+        {(status === 'unknown' || status === 'unreachable') && (
+          <div className="mt-2 w-full p-4 bg-black/40 rounded-xl border border-white/5">
+            <p className="text-[10px] font-mono text-slate-400 break-all leading-tight">
+              <span className="text-red-500 font-bold uppercase mr-2">Debug Trace:</span>
+              {debugInfo}
+            </p>
+          </div>
+        )}
+
+        <div className="mt-4 px-6 text-center text-sm text-slate-400 max-w-sm leading-relaxed self-center">
+          <p className="mb-4">
+            Google Maps API is utilized for spatial analytics and external member mapping features.
+          </p>
+          <div className="inline-block p-3 bg-green-500/10 rounded-xl border border-green-500/20">
+            <p className="text-green-300 font-semibold text-xs uppercase tracking-tighter">Support Tip:</p>
+            <p className="text-[11px] mt-1">If the card is red, check if web-based map applications are also failing for other users.</p>
           </div>
         </div>
       </main>
