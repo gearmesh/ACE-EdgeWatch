@@ -34,7 +34,10 @@ const BingMapsPage: React.FC<BingMapsPageProps> = ({ onBack }) => {
     url: ''
   });
 
-  useEffect(() => {
+  const checkBing = async () => {
+    let currentStatus: Status = 'unknown';
+    let debugMsg = '';
+
     const testDirectConnection = (testImageUrl: string): Promise<boolean> => {
       return new Promise((resolve) => {
         const img = new Image();
@@ -78,86 +81,83 @@ const BingMapsPage: React.FC<BingMapsPageProps> = ({ onBack }) => {
       throw lastError || new Error("All proxies failed");
     };
 
-    const checkBing = async () => {
-      let currentStatus: Status = 'unknown';
-      let debugMsg = '';
-
+    try {
+      setStatus('loading');
+      
+      // 1. Try Scraping First
       try {
-        setStatus('loading');
-        
-        // 1. Try Scraping First
-        try {
-            const targetUrl = 'https://www.isitdownrightnow.com/maps.bing.com.html';
-            const htmlText = await fetchWithFallback(targetUrl, [
-                'https://api.allorigins.win/get?url=',
-                'https://corsproxy.io/'
-            ]);
-            
-            const lowerHtml = htmlText.toLowerCase();
-            debugMsg = htmlText.substring(0, 300);
+          const targetUrl = 'https://www.isitdownrightnow.com/maps.bing.com.html';
+          const htmlText = await fetchWithFallback(targetUrl, [
+              'https://api.allorigins.win/get?url=',
+              'https://corsproxy.io/'
+          ]);
+          
+          const lowerHtml = htmlText.toLowerCase();
+          debugMsg = htmlText.substring(0, 300);
 
-            if (lowerHtml.includes('class="status_up"') || lowerHtml.includes("class='status_up'")) {
-                 currentStatus = 'healthy';
-            } else if (lowerHtml.includes('class="status_down"') || lowerHtml.includes("class='status_down'")) {
-                 currentStatus = 'critical';
-            } else if (lowerHtml.includes('is down for everyone')) {
-                currentStatus = 'critical';
-            } else if (lowerHtml.includes('is up and reachable') || lowerHtml.includes('reachable by us')) {
-                currentStatus = 'healthy';
-            }
-        } catch (scrapeError: any) {
-            debugMsg = `Scrape failed: ${scrapeError.message}`;
-        }
-
-        // 2. Fallback: Direct Connection Test
-        if (currentStatus === 'unknown') {
-            debugMsg += " | Attempting Direct Ping...";
-            const isReachable = await testDirectConnection('https://ecn.t0.tiles.virtualearth.net/tiles/r0.jpeg?g=1&mkt=en-US');
-            
-            if (isReachable) {
-                currentStatus = 'healthy';
-                debugMsg += " | Direct Ping: SUCCESS";
-            } else {
-                currentStatus = 'unreachable';
-                debugMsg += " | Direct Ping: FAILED";
-            }
-        }
-
-        setStatus(currentStatus);
-        setDebugInfo(debugMsg);
-
-      } catch (error: any) {
-        console.error('Bing Check Error:', error);
-        setStatus('unreachable');
-        setDebugInfo(`Critical Failure: ${error.message}`);
+          if (lowerHtml.includes('class="status_up"') || lowerHtml.includes("class='status_up'")) {
+               currentStatus = 'healthy';
+          } else if (lowerHtml.includes('class="status_down"') || lowerHtml.includes("class='status_down'")) {
+               currentStatus = 'critical';
+          } else if (lowerHtml.includes('is down for everyone')) {
+              currentStatus = 'critical';
+          } else if (lowerHtml.includes('is up and reachable') || lowerHtml.includes('reachable by us')) {
+              currentStatus = 'healthy';
+          }
+      } catch (scrapeError: any) {
+          debugMsg = `Scrape failed: ${scrapeError.message}`;
       }
-    };
 
+      // 2. Fallback: Direct Connection Test
+      if (currentStatus === 'unknown') {
+          debugMsg += " | Attempting Direct Ping...";
+          const isReachable = await testDirectConnection('https://ecn.t0.tiles.virtualearth.net/tiles/r0.jpeg?g=1&mkt=en-US');
+          
+          if (isReachable) {
+              currentStatus = 'healthy';
+              debugMsg += " | Direct Ping: SUCCESS";
+          } else {
+              currentStatus = 'unreachable';
+              debugMsg += " | Direct Ping: FAILED";
+          }
+      }
+
+      setStatus(currentStatus);
+      setDebugInfo(debugMsg);
+
+    } catch (error: any) {
+      console.error('Bing Check Error:', error);
+      setStatus('unreachable');
+      setDebugInfo(`Critical Failure: ${error.message}`);
+    }
+  };
+
+  useEffect(() => {
     checkBing();
   }, []);
 
   const getStatusConfig = (s: Status) => {
     switch (s) {
       case 'healthy':
-        return { color: 'bg-green-600 border-green-500', text: 'Healthy', iconColor: 'text-green-300' };
+        return { color: 'bg-green-600 hover:bg-green-700 shadow-green-500/20', text: 'Healthy' };
       case 'warning':
-        return { color: 'bg-yellow-600 border-yellow-500', text: 'Warning', iconColor: 'text-yellow-200' };
+        return { color: 'bg-yellow-500 hover:bg-yellow-600 shadow-yellow-500/20', text: 'Warning' };
       case 'critical':
       case 'unreachable':
-        return { color: 'bg-red-600 border-red-500', text: 'Service Down', iconColor: 'text-red-200' };
+        return { color: 'bg-red-600 hover:bg-red-700 shadow-red-500/20', text: 'Service Down' };
       case 'loading':
-        return { color: 'bg-slate-800 border-slate-700', text: 'Checking Status...', iconColor: 'text-blue-400' };
+        return { color: 'bg-slate-700 hover:bg-slate-800', text: 'Checking...' };
       default:
-        return { color: 'bg-slate-800 border-slate-700', text: 'Check Status', iconColor: 'text-blue-400' };
+        return { color: 'bg-slate-600 hover:bg-slate-700', text: 'Unknown' };
     }
   };
 
   const currentConfig = getStatusConfig(status);
 
-  const handleTileClick = (url: string) => {
+  const handleTileClick = () => {
     setPopup({
       isOpen: true,
-      url: url
+      url: 'https://www.isitdownrightnow.com/maps.bing.com.html'
     });
   };
 
@@ -182,42 +182,63 @@ const BingMapsPage: React.FC<BingMapsPageProps> = ({ onBack }) => {
         <h1 className="text-xl font-bold ml-2">Bing Maps Health</h1>
       </header>
 
-      <main className="flex-grow flex flex-col items-center">
-        <div className="mt-8 mb-12">
-            <div className={`p-8 rounded-full ring-4 transition-all duration-700 ${status === 'healthy' ? 'bg-green-500/20 ring-green-500/30' : 'bg-blue-500/20 ring-blue-500/30'} ${status === 'loading' ? 'animate-pulse' : ''}`}>
-                <MapLocationIcon className={`w-24 h-24 transition-colors duration-700 ${status === 'healthy' ? 'text-green-400' : 'text-blue-400'}`} />
-            </div>
-        </div>
-        
-        <div className="w-full max-w-xs space-y-6">
-          <button
-            onClick={() => handleTileClick('https://www.isitdownrightnow.com/maps.bing.com.html')}
-            className={`w-full flex flex-col items-center gap-3 border p-6 rounded-2xl shadow-xl transition-all transform hover:scale-[1.03] group ${currentConfig.color}`}
-          >
-            <LightningIcon className={`h-10 w-10 group-hover:scale-110 transition-transform ${currentConfig.iconColor}`} />
-            <div className="text-center">
-                <h3 className="font-bold text-lg">{currentConfig.text}</h3>
-                <p className="text-xs text-white/70 mt-1">Tap for details on IsItDownRightNow</p>
-            </div>
-          </button>
-        </div>
+      <main className="flex-grow flex flex-col gap-6">
+        {/* Large Status Card (Half Screen Size) */}
+        <button
+          onClick={checkBing}
+          className={`w-full min-h-[40vh] rounded-3xl shadow-2xl flex flex-col items-center justify-center p-10 transition-all transform active:scale-[0.98] ring-1 ring-white/10 ${currentConfig.color} ${status === 'loading' ? 'animate-pulse' : ''}`}
+        >
+          <div className="bg-white/20 p-6 rounded-full mb-6">
+             <MapLocationIcon className="h-20 w-20 text-white" />
+          </div>
+          <h2 className="text-4xl font-black text-white mb-2 tracking-tight">BING MAPS</h2>
+          <span className="text-3xl font-bold text-white uppercase tracking-widest drop-shadow-md">
+            {currentConfig.text}
+          </span>
+          <p className="text-sm font-medium text-white/70 mt-4 flex items-center gap-2">
+            <LightningIcon className="h-4 w-4" />
+            Tap to Refresh
+          </p>
+        </button>
 
-        {status === 'unknown' && (
-          <div className="mt-6 w-full max-w-xs p-3 bg-black/40 rounded-lg border border-white/10 overflow-hidden">
-            <p className="text-[10px] font-mono text-slate-400 break-all leading-relaxed">
-              <span className="text-cyan-500 font-bold uppercase">Debug Trace:</span><br/>
+        {/* View Details Button */}
+        <button
+          onClick={handleTileClick}
+          className="w-full bg-slate-800 border border-slate-700 p-6 rounded-2xl flex items-center justify-between hover:bg-slate-750 transition-colors shadow-lg active:scale-[0.99]"
+        >
+          <div className="flex items-center gap-4">
+            <div className="p-3 bg-blue-500/10 rounded-xl text-blue-400">
+               <LightningIcon className="h-6 w-6" />
+            </div>
+            <div className="text-left">
+                <h3 className="font-bold text-lg">External Analysis</h3>
+                <p className="text-xs text-slate-400 leading-tight">Check IsItDownRightNow details</p>
+            </div>
+          </div>
+          <div className="text-slate-500">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </div>
+        </button>
+
+        {/* Debug Trace (Collapsed/Minimal) */}
+        {(status === 'unknown' || status === 'unreachable') && (
+          <div className="mt-2 w-full p-4 bg-black/40 rounded-xl border border-white/5">
+            <p className="text-[10px] font-mono text-slate-400 break-all leading-tight">
+              <span className="text-red-500 font-bold uppercase mr-2">Trace Log:</span>
               {debugInfo}
             </p>
           </div>
         )}
 
-        <div className="mt-12 px-6 text-center text-sm text-slate-400 max-w-sm leading-relaxed">
+        <div className="mt-4 px-6 text-center text-sm text-slate-400 max-w-sm leading-relaxed self-center">
           <p className="mb-4">
-            Bing Maps powers the location features in RADAR and various member validation workflows.
+            Bing Maps powers location services for RADAR. If the status is not Healthy, map performance may be degraded.
           </p>
-          <div className="p-3 bg-blue-500/10 rounded-lg border border-blue-500/20">
-            <p className="text-blue-300 font-semibold">Pro Tip:</p>
-            <p className="text-xs">If Bing Maps is unreachable, suggest users switch to manual address entry if available in their respective apps.</p>
+          <div className="inline-block p-3 bg-blue-500/10 rounded-xl border border-blue-500/20">
+            <p className="text-blue-300 font-semibold text-xs uppercase tracking-tighter">Support Recommendation:</p>
+            <p className="text-[11px] mt-1">Direct users to verify local internet connectivity if this status remains healthy during reported issues.</p>
           </div>
         </div>
       </main>
