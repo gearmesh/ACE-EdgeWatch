@@ -8,7 +8,7 @@
 
 import React, { useState } from 'react';
 import type { Page } from '../App';
-import { BackArrowIcon, GiftIcon, QuestionIcon, LightningIcon, SearchEyeIcon, TableListIcon, EyeIcon } from './icons';
+import { BackArrowIcon, QuestionIcon, LightningIcon, SearchEyeIcon, TableListIcon, EyeIcon, ShareIcon } from './icons';
 
 interface SmartITPageProps {
   onBack: () => void;
@@ -118,7 +118,7 @@ const SmartITPage: React.FC<SmartITPageProps> = ({ onBack, onNavigate }) => {
 
         {/* 5. Share App */}
         <ServiceTile 
-          icon={<GiftIcon className="h-8 w-8 text-blue-400" />} 
+          icon={<ShareIcon className="h-8 w-8 text-blue-400" />} 
           title="Share App" 
           onClick={() => onNavigate('share')}
         />
