@@ -6,9 +6,9 @@
  * Also provides access to app utility features like "Share App" and "Help".
  */
 
-import React from 'react';
+import React, { useState } from 'react';
 import type { Page } from '../App';
-import { BackArrowIcon, PlaceholderIcon, CarCrashIcon, GiftIcon, QuestionIcon, LightningIcon, SearchEyeIcon, TableListIcon, EyeIcon } from './icons';
+import { BackArrowIcon, GiftIcon, QuestionIcon, LightningIcon, SearchEyeIcon, TableListIcon, EyeIcon } from './icons';
 
 interface SmartITPageProps {
   onBack: () => void;
@@ -39,9 +39,48 @@ const ServiceTile: React.FC<TileProps> = ({ icon, title, onClick, disabled = fal
   );
 };
 
+const MessageBox: React.FC<{ isOpen: boolean; message: string; onConfirm: () => void }> = ({ isOpen, message, onConfirm }) => {
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-[70] p-4 backdrop-blur-sm animate-[fade-in-up_0.2s_ease-out]">
+      <div className="bg-slate-800 border border-slate-600 rounded-xl shadow-2xl max-w-sm w-full p-6 text-center ring-1 ring-white/10">
+        <p className="text-white text-lg mb-6 font-medium leading-relaxed">{message}</p>
+        <button
+          onClick={onConfirm}
+          className="bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-3 px-10 rounded-lg transition-all transform hover:scale-105 shadow-lg shadow-cyan-500/20"
+        >
+          OK
+        </button>
+      </div>
+    </div>
+  );
+};
+
 const SmartITPage: React.FC<SmartITPageProps> = ({ onBack, onNavigate }) => {
+  const [popup, setPopup] = useState<{ isOpen: boolean; url: string }>({
+    isOpen: false,
+    url: ''
+  });
+
+  const handleDashboardClick = (url: string) => {
+    setPopup({ isOpen: true, url });
+  };
+
+  const handleConfirm = () => {
+    const urlToOpen = popup.url;
+    setPopup({ isOpen: false, url: '' });
+    window.open(urlToOpen, '_blank', 'noopener,noreferrer');
+  };
+
   return (
     <div className="flex flex-col min-h-screen p-4">
+      <MessageBox 
+        isOpen={popup.isOpen}
+        message="ACE Smart IT is loading. This may take a moment"
+        onConfirm={handleConfirm}
+      />
+
       <header className="flex items-center mb-6">
         <button onClick={onBack} className="p-2 -ml-2">
           <BackArrowIcon />
@@ -53,21 +92,21 @@ const SmartITPage: React.FC<SmartITPageProps> = ({ onBack, onNavigate }) => {
         <ServiceTile 
           icon={<LightningIcon />} 
           title="ACE Outages Dashboard" 
-          onClick={() => window.open('https://aceitsm-or1.onbmc.com/dashboards/d/c97df517-795d-4a3b-9920-c8cca2139a8e/ace-outage-dashboard?orgId=897459146', '_blank', 'noopener,noreferrer')}
+          onClick={() => handleDashboardClick('https://aceitsm-or1.onbmc.com/dashboards/d/c97df517-795d-4a3b-9920-c8cca2139a8e/ace-outage-dashboard?orgId=897459146')}
         />
 
         {/* 2. ACE Problem Investigation */}
         <ServiceTile 
           icon={<SearchEyeIcon />} 
           title="ACE Problem Investigation" 
-          onClick={() => window.open('https://aceitsm-or1.onbmc.com/dashboards/d/f0c4c61b-cebb-415e-86b1-6c0849c0116b/ace-outage-problem-investigation?orgId=897459146', '_blank', 'noopener,noreferrer')}
+          onClick={() => handleDashboardClick('https://aceitsm-or1.onbmc.com/dashboards/d/f0c4c61b-cebb-415e-86b1-6c0849c0116b/ace-outage-problem-investigation?orgId=897459146')}
         />
 
         {/* 3. ACE Incident Table Dashboard */}
         <ServiceTile 
           icon={<TableListIcon />} 
           title="ACE Incident Table Dashboard" 
-          onClick={() => window.open('https://aceitsm-or1.onbmc.com/dashboards/d/CmJnGbtVk/ace-incident-table-dashboard?orgId=897459146', '_blank', 'noopener,noreferrer')}
+          onClick={() => handleDashboardClick('https://aceitsm-or1.onbmc.com/dashboards/d/CmJnGbtVk/ace-incident-table-dashboard?orgId=897459146')}
         />
 
         {/* 4. Help & Feedback */}

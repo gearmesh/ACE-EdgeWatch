@@ -89,6 +89,8 @@ const SplashScreen: React.FC = () => {
                   <span>Greg Messemer</span>
                   <span className="text-cyan-400">•</span>
                   <span>Mauricio Romero</span>
+                   <span className="text-cyan-400">•</span>
+                  <span>AI</span>
               </div>
           </div>
         </div>

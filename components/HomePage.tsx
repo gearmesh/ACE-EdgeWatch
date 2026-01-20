@@ -8,10 +8,9 @@
  * - Displays the primary navigation menu connecting to Application Status, Cloud Providers, Smart IT, etc.
  * - Shows the application title and current build version.
  * - Manages UI sound effects on interaction.
- * - Displays an interstitial loading popup when navigating to Smart IT.
  */
 
-import React, { useState } from 'react';
+import React from 'react';
 import type { Page } from '../App';
 import { EyeIcon, UserIcon, CloudIcon, ComputerIcon, BMCHelixIcon } from './icons';
 
@@ -69,27 +68,7 @@ const NavButton: React.FC<NavButtonProps> = ({ icon, title, description, accentC
     );
 };
 
-const MessageBox: React.FC<{ isOpen: boolean; message: string; onConfirm: () => void }> = ({ isOpen, message, onConfirm }) => {
-  if (!isOpen) return null;
-
-  return (
-    <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4 backdrop-blur-sm animate-[fade-in-up_0.2s_ease-out]">
-      <div className="bg-slate-800 border border-slate-600 rounded-xl shadow-2xl max-w-sm w-full p-6 text-center ring-1 ring-white/10">
-        <p className="text-white text-lg mb-6 font-medium leading-relaxed">{message}</p>
-        <button
-          onClick={onConfirm}
-          className="bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-3 px-8 rounded-lg transition-all transform hover:scale-105 shadow-lg shadow-cyan-500/20"
-        >
-          OK
-        </button>
-      </div>
-    </div>
-  );
-};
-
 const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
-  const [showSmartITPopup, setShowSmartITPopup] = useState(false);
-
   // Audio Feedback Utility
   const playClickSound = () => {
     try {
@@ -115,16 +94,7 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
 
   const handleButtonClick = (page: Page) => {
     playClickSound();
-    if (page === 'smartit') {
-        setShowSmartITPopup(true);
-    } else {
-        onNavigate(page);
-    }
-  };
-
-  const handleSmartITConfirm = () => {
-      setShowSmartITPopup(false);
-      onNavigate('smartit');
+    onNavigate(page);
   };
 
   return (
@@ -141,12 +111,6 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
             }
         `}</style>
         
-        <MessageBox 
-            isOpen={showSmartITPopup}
-            message="ACE Smart IT is loading. This may take a moment"
-            onConfirm={handleSmartITConfirm}
-        />
-
         {/* Ambient Background Gradients */}
         <div className="fixed inset-0 pointer-events-none">
             <div className="absolute -top-[10%] -left-[10%] w-[60%] h-[60%] rounded-full bg-blue-900/10 blur-[100px]" />
@@ -227,6 +191,8 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
                     <span>Greg Messemer</span>
                     <span className="text-cyan-400">•</span>
                     <span>Mauricio Romero</span>
+                     <span className="text-cyan-400">•</span>
+                  <span>AI</span>
                 </div>
                 <p className="text-[10px] text-slate-500 pt-4">
                     Data provided by DownDetector & Official Status Pages
