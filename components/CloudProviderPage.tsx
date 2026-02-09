@@ -9,7 +9,7 @@
 
 import React, { useState } from 'react';
 import type { Page } from '../App';
-import { BackArrowIcon, MapLocationIcon, CloudIcon, ServerIcon, BuildingIcon, SalesforceIcon, MSEntraIcon, MSTeamsIcon, CloudflareIcon, OldPhoneIcon } from './icons';
+import { BackArrowIcon, MapLocationIcon, CloudIcon, ServerIcon, BuildingIcon, SalesforceIcon, MSEntraIcon, MSTeamsIcon, CloudflareIcon, OldPhoneIcon, GuidewireIcon } from './icons';
 
 interface CloudProviderPageProps {
   onNavigate: (page: Page) => void;
@@ -84,15 +84,17 @@ const CloudProviderPage: React.FC<CloudProviderPageProps> = ({ onNavigate }) => 
         <h1 className="text-xl font-bold ml-2">Cloud Service Monitor</h1>
       </header>
       <main className="grid grid-cols-2 gap-4">
-        {/* GENESYS as the 1st icon */}
+        {/* Floating Guidewire, Genesys, and Salesforce to the top */}
+        <ServiceTile icon={<GuidewireIcon className="h-8 w-8" />} title="Guidewire" onClick={() => onNavigate('guidewire')} />
         <ServiceTile icon={<OldPhoneIcon className="h-8 w-8 text-cyan-400" />} title="GENESYS" onClick={() => onNavigate('genesys')} />
+        <ServiceTile icon={<SalesforceIcon />} title="Salesforce" onClick={handleSalesforceClick} />
         
+        {/* Other existing buttons */}
         <ServiceTile icon={<MapLocationIcon />} title="Bing Maps" onClick={() => onNavigate('bing')} />
         <ServiceTile icon={<MapLocationIcon />} title="Google Maps" onClick={() => onNavigate('googlemaps')} />
         <ServiceTile icon={<CloudIcon />} title="Azure" onClick={() => window.open('https://downdetector.com/status/windows-azure/', '_blank', 'noopener,noreferrer')} />
         <ServiceTile icon={<ServerIcon />} title="AWS" onClick={() => window.open('https://downdetector.com/status/aws-amazon-web-services/', '_blank', 'noopener,noreferrer')} />
         <ServiceTile icon={<BuildingIcon />} title="Microsoft 365" onClick={() => window.open('https://downdetector.com/status/microsoft-365/', '_blank', 'noopener,noreferrer')} />
-        <ServiceTile icon={<SalesforceIcon />} title="Salesforce" onClick={handleSalesforceClick} />
         <ServiceTile icon={<MSEntraIcon />} title="MS Entra" onClick={() => window.open('https://downdetector.com/status/microsoft-entra/', '_blank', 'noopener,noreferrer')} />
         <ServiceTile icon={<MSTeamsIcon />} title="MS Teams" onClick={() => window.open('https://downdetector.com/status/teams/', '_blank', 'noopener,noreferrer')} />
         <ServiceTile icon={<CloudflareIcon />} title="Cloudflare" onClick={() => onNavigate('cloudflare-status')} />

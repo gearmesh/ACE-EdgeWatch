@@ -11,7 +11,7 @@
 
 import React, { useState } from 'react';
 import type { Page } from '../App';
-import { BackArrowIcon, CartIcon, MailIcon, PhoneIcon, KeyIcon, PlaceholderIcon, CloudIcon, MultipleAppsIcon, FamilyIcon, TableauIcon, MuleSoftIcon, CarIcon, OldPhoneIcon, GuidewireIcon } from './icons';
+import { BackArrowIcon, CartIcon, MailIcon, PhoneIcon, KeyIcon, PlaceholderIcon, CloudIcon, MultipleAppsIcon, FamilyIcon, TableauIcon, MuleSoftIcon, CarIcon, OldPhoneIcon, GuidewireIcon, SalesforceIcon } from './icons';
 
 interface ApplicationPageProps {
   onNavigate: (page: Page) => void;
@@ -86,6 +86,17 @@ const ApplicationPage: React.FC<ApplicationPageProps> = ({ onNavigate }) => {
     });
   };
 
+  const handleSalesforceClick = () => {
+    setPopupState({
+      isOpen: true,
+      message: "The Salesforce’s status page shows issues & outages per region. Each ID# details which product or region is affected and what the impact is, so you can quickly see if Salesforce problems might be affecting you.",
+      onConfirm: () => {
+        closePopup();
+        window.open('https://status.salesforce.com/current', '_blank', 'noopener,noreferrer');
+      }
+    });
+  };
+
   const handleSalesforceProductClick = (productName: string, url: string) => {
     setPopupState({
       isOpen: true,
@@ -112,7 +123,7 @@ const ApplicationPage: React.FC<ApplicationPageProps> = ({ onNavigate }) => {
         <h1 className="text-xl font-bold ml-2">ACE App Cloud Service Status</h1>
       </header>
       <main className="grid grid-cols-2 gap-4">
-        {/* Guidewire button added */}
+        {/* Floating Guidewire, Genesys, and Salesforce to the top */}
         <ServiceTile 
             icon={<GuidewireIcon className="h-10 w-10" />} 
             title="Guidewire" 
@@ -126,13 +137,19 @@ const ApplicationPage: React.FC<ApplicationPageProps> = ({ onNavigate }) => {
             onClick={() => onNavigate('genesys')} 
         />
         <ServiceTile 
+            icon={<SalesforceIcon />} 
+            title="Salesforce" 
+            subtitle="Status Board"
+            onClick={handleSalesforceClick} 
+        />
+        
+        {/* Other existing buttons */}
+        <ServiceTile 
             icon={<CartIcon />} 
             title="E-Commerce" 
             subtitle="AWS"
             onClick={() => window.open('https://downdetector.com/status/aws-amazon-web-services/', '_blank', 'noopener,noreferrer')} 
         />
-        
-        {/* Next Row */}
         <ServiceTile 
           icon={<FamilyIcon />} 
           title="RADAR & Member Validation" 
@@ -144,8 +161,6 @@ const ApplicationPage: React.FC<ApplicationPageProps> = ({ onNavigate }) => {
             title="Tableau" 
             onClick={() => handleSalesforceProductClick('Tableau', 'https://status.salesforce.com/products/Tableau')} 
         />
-
-        {/* Next Row */}
         <ServiceTile 
             icon={<MuleSoftIcon />} 
             title="MuleSoft" 
@@ -157,8 +172,6 @@ const ApplicationPage: React.FC<ApplicationPageProps> = ({ onNavigate }) => {
           subtitle="per Azure Downdetector" 
           onClick={() => window.open('https://downdetector.com/status/windows-azure/', '_blank', 'noopener,noreferrer')} 
         />
-
-        {/* Next Row */}
         <ServiceTile 
           icon={<CloudIcon />} 
           title="Azure Health" 
@@ -166,8 +179,6 @@ const ApplicationPage: React.FC<ApplicationPageProps> = ({ onNavigate }) => {
           onClick={() => window.open('https://portal.azure.com/#view/Microsoft_Azure_Health/AzureHealthBrowseBlade/~/serviceIssues', '_blank', 'noopener,noreferrer')} 
         />
         <ServiceTile icon={<PhoneIcon />} title="Intune" onClick={() => window.open('https://statusgator.com/services/microsoft-intune', '_blank', 'noopener,noreferrer')} />
-        
-        {/* Next Row */}
         <ServiceTile icon={<MailIcon />} title="Outlook" onClick={() => window.open('https://downdetector.com/status/outlook/', '_blank', 'noopener,noreferrer')} />
         <ServiceTile 
           icon={<MultipleAppsIcon />} 
@@ -175,8 +186,6 @@ const ApplicationPage: React.FC<ApplicationPageProps> = ({ onNavigate }) => {
           subtitle="Cloudflare"
           onClick={() => onNavigate('cloudflare-status')} 
         />
-        
-        {/* Next Row */}
         <ServiceTile 
             icon={<CarIcon />} 
             title="CA DMV" 

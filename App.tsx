@@ -228,7 +228,7 @@ const App: React.FC = () => {
       case 'genesys':
         return <GenesysPage onBack={() => navigate(previousPage || 'home')} />;
       case 'guidewire':
-        return <GuidewirePage onBack={() => navigate('application')} />;
+        return <GuidewirePage onBack={() => navigate(previousPage || 'home')} />;
       default:
         return <HomePage onNavigate={navigate} />;
     }
