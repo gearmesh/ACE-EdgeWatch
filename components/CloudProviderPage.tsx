@@ -9,7 +9,7 @@
 
 import React, { useState } from 'react';
 import type { Page } from '../App';
-import { BackArrowIcon, MapLocationIcon, CloudIcon, ServerIcon, BuildingIcon, SalesforceIcon, MSEntraIcon, MSTeamsIcon, CloudflareIcon, OldPhoneIcon, GuidewireIcon } from './icons';
+import { BackArrowIcon, MapLocationIcon, CloudIcon, ServerIcon, BuildingIcon, SalesforceIcon, MSEntraIcon, MSTeamsIcon, CloudflareIcon, OldPhoneIcon, GuidewireIcon, GitHubIcon } from './icons';
 
 interface CloudProviderPageProps {
   onNavigate: (page: Page) => void;
@@ -58,23 +58,40 @@ const MessageBox: React.FC<{ isOpen: boolean; message: string; onConfirm: () => 
 };
 
 const CloudProviderPage: React.FC<CloudProviderPageProps> = ({ onNavigate }) => {
-  const [showSalesforcePopup, setShowSalesforcePopup] = useState(false);
+  const [popupState, setPopupState] = useState<{ isOpen: boolean; message: string; url: string }>({
+    isOpen: false,
+    message: '',
+    url: ''
+  });
 
   const handleSalesforceClick = () => {
-    setShowSalesforcePopup(true);
+    setPopupState({
+      isOpen: true,
+      message: "The Salesforce’s status page shows issues & outages per region. Each ID# details which product or region is affected and what the impact is, so you can quickly see if Salesforce problems might be affecting you.",
+      url: 'https://status.salesforce.com/current'
+    });
   };
 
-  const handleSalesforceConfirm = () => {
-    setShowSalesforcePopup(false);
-    window.open('https://status.salesforce.com/current', '_blank', 'noopener,noreferrer');
+  const handleGitHubClick = () => {
+    setPopupState({
+      isOpen: true,
+      message: "GitHub Status tracks the availability of version control, CI/CD Actions, and hosted APIs. Check this if you encounter repository access or build automation failures.",
+      url: 'https://www.githubstatus.com/'
+    });
+  };
+
+  const handleConfirm = () => {
+    const urlToOpen = popupState.url;
+    setPopupState(prev => ({ ...prev, isOpen: false }));
+    window.open(urlToOpen, '_blank', 'noopener,noreferrer');
   };
 
   return (
     <div className="flex flex-col min-h-screen p-4 relative">
       <MessageBox 
-        isOpen={showSalesforcePopup} 
-        message="The Salesforce’s status page shows issues & outages per region. Each ID# details which product or region is affected and what the impact is, so you can quickly see if Salesforce problems might be affecting you." 
-        onConfirm={handleSalesforceConfirm} 
+        isOpen={popupState.isOpen} 
+        message={popupState.message} 
+        onConfirm={handleConfirm} 
       />
 
       <header className="flex items-center mb-6">
@@ -98,6 +115,9 @@ const CloudProviderPage: React.FC<CloudProviderPageProps> = ({ onNavigate }) => 
         <ServiceTile icon={<MSEntraIcon />} title="MS Entra" onClick={() => window.open('https://downdetector.com/status/microsoft-entra/', '_blank', 'noopener,noreferrer')} />
         <ServiceTile icon={<MSTeamsIcon />} title="MS Teams" onClick={() => window.open('https://downdetector.com/status/teams/', '_blank', 'noopener,noreferrer')} />
         <ServiceTile icon={<CloudflareIcon />} title="Cloudflare" onClick={() => onNavigate('cloudflare-status')} />
+        
+        {/* Added GitHub as requested */}
+        <ServiceTile icon={<GitHubIcon className="h-8 w-8" />} title="GitHub" onClick={handleGitHubClick} />
       </main>
     </div>
   );

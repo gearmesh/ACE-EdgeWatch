@@ -11,7 +11,7 @@
 
 import React, { useState } from 'react';
 import type { Page } from '../App';
-import { BackArrowIcon, CartIcon, MailIcon, PhoneIcon, KeyIcon, PlaceholderIcon, CloudIcon, MultipleAppsIcon, FamilyIcon, TableauIcon, MuleSoftIcon, CarIcon, OldPhoneIcon, GuidewireIcon, SalesforceIcon } from './icons';
+import { BackArrowIcon, CartIcon, MailIcon, PhoneIcon, KeyIcon, PlaceholderIcon, CloudIcon, MultipleAppsIcon, FamilyIcon, TableauIcon, MuleSoftIcon, CarIcon, OldPhoneIcon, GuidewireIcon, SalesforceIcon, GitHubIcon } from './icons';
 
 interface ApplicationPageProps {
   onNavigate: (page: Page) => void;
@@ -93,6 +93,17 @@ const ApplicationPage: React.FC<ApplicationPageProps> = ({ onNavigate }) => {
       onConfirm: () => {
         closePopup();
         window.open('https://status.salesforce.com/current', '_blank', 'noopener,noreferrer');
+      }
+    });
+  };
+
+  const handleGitHubClick = () => {
+    setPopupState({
+      isOpen: true,
+      message: "The GitHub status page provides real-time info on the health of Git operations, Actions, and APIs. This helps identify platform-wide issues with repositories or automation pipelines.",
+      onConfirm: () => {
+        closePopup();
+        window.open('https://www.githubstatus.com/', '_blank', 'noopener,noreferrer');
       }
     });
   };
@@ -191,6 +202,14 @@ const ApplicationPage: React.FC<ApplicationPageProps> = ({ onNavigate }) => {
             title="CA DMV" 
             subtitle="DownDetector"
             onClick={() => window.open('https://downdetector.com/status/california-dmv/', '_blank', 'noopener,noreferrer')} 
+        />
+        
+        {/* Added GitHub as requested */}
+        <ServiceTile 
+            icon={<GitHubIcon className="h-10 w-10" />} 
+            title="GitHub" 
+            subtitle="DevOps Health"
+            onClick={handleGitHubClick} 
         />
       </main>
     </div>
