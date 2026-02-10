@@ -31,7 +31,7 @@ const AboutPage: React.FC<AboutPageProps> = ({ onBack }) => {
               The Mission
             </h2>
             <p className="mb-4">
-             ACE EdgeWatch is a high-performance incident response app designed to eliminate the "fog of war" during major enterprise service disruptions. In a modern distributed environment, identifying whether a failure is internal applicatio or external Cloud-based dependency, can be a critical first step in mitigation.
+             ACE EdgeWatch is a high-performance incident response app designed to eliminate the "fog of war" during major enterprise service disruptions. In a modern distributed environment, identifying whether a failure is internal application or external Cloud-based dependency, can be a critical first step in mitigation.
             </p>
             
           </section>
