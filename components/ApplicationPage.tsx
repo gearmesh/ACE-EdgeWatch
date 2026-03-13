@@ -108,6 +108,17 @@ const ApplicationPage: React.FC<ApplicationPageProps> = ({ onNavigate }) => {
     });
   };
 
+  const handleCloudflareClick = () => {
+    setPopupState({
+      isOpen: true,
+      message: "This test is still in beta and access to results may vary.",
+      onConfirm: () => {
+        closePopup();
+        onNavigate('cloudflare-status');
+      }
+    });
+  };
+
   const handleSalesforceProductClick = (productName: string, url: string) => {
     setPopupState({
       isOpen: true,
@@ -195,7 +206,7 @@ const ApplicationPage: React.FC<ApplicationPageProps> = ({ onNavigate }) => {
           icon={<MultipleAppsIcon />} 
           title="Claims Pay, TLO, N2uitive & ISO" 
           subtitle="Cloudflare"
-          onClick={() => onNavigate('cloudflare-status')} 
+          onClick={handleCloudflareClick} 
         />
         <ServiceTile 
             icon={<CarIcon />} 

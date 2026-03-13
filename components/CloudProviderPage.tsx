@@ -80,10 +80,22 @@ const CloudProviderPage: React.FC<CloudProviderPageProps> = ({ onNavigate }) => 
     });
   };
 
+  const handleCloudflareClick = () => {
+    setPopupState({
+      isOpen: true,
+      message: "This test is still in beta and access to results may vary.",
+      url: 'cloudflare-status'
+    });
+  };
+
   const handleConfirm = () => {
     const urlToOpen = popupState.url;
     setPopupState(prev => ({ ...prev, isOpen: false }));
-    window.open(urlToOpen, '_blank', 'noopener,noreferrer');
+    if (urlToOpen === 'cloudflare-status') {
+      onNavigate('cloudflare-status');
+    } else {
+      window.open(urlToOpen, '_blank', 'noopener,noreferrer');
+    }
   };
 
   return (
@@ -114,7 +126,7 @@ const CloudProviderPage: React.FC<CloudProviderPageProps> = ({ onNavigate }) => 
         <ServiceTile icon={<BuildingIcon />} title="Microsoft 365" onClick={() => window.open('https://downdetector.com/status/microsoft-365/', '_blank', 'noopener,noreferrer')} />
         <ServiceTile icon={<MSEntraIcon />} title="MS Entra" onClick={() => window.open('https://downdetector.com/status/microsoft-entra/', '_blank', 'noopener,noreferrer')} />
         <ServiceTile icon={<MSTeamsIcon />} title="MS Teams" onClick={() => window.open('https://downdetector.com/status/teams/', '_blank', 'noopener,noreferrer')} />
-        <ServiceTile icon={<CloudflareIcon />} title="Cloudflare" onClick={() => onNavigate('cloudflare-status')} />
+        <ServiceTile icon={<CloudflareIcon />} title="Cloudflare" onClick={handleCloudflareClick} />
         
         {/* Added GitHub as requested */}
         <ServiceTile icon={<GitHubIcon className="h-8 w-8" />} title="GitHub" onClick={handleGitHubClick} />
